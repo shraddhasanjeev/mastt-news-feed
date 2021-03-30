@@ -2,14 +2,14 @@
   "name": "mastt-news-feed",
   "version": "1.0.0",
   "description": "Remote Working Dashboard - News Feed for Mastt as part of USYD Capstone Semester 1, 2021 project.",
-  "main": "server.js",
+  "main": "server_new.js",
   "dependencies": {
     "express": "^4.17.1"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server_new.js"
   },
   "repository": {
     "type": "git",
