@@ -1,0 +1,8 @@
+[
+  {
+    "category": "holiday",
+    "url": "/holiday",
+    "frequency": 5000,
+    "location": "./components/holiday.js"
+  }
+]
