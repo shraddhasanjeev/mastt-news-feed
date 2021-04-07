@@ -15,7 +15,7 @@ class MessageQueue {
         // if it is an empty set
         if (this.queue.length == 0) {
             var date = message.start_date
-            console.log(date.getTime())
+            //console.log(date.getTime())
             this.queue.push(message);
         } else {
             for (let index = 0; index < this.queue.length;index++) {
