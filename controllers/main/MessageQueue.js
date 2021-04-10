@@ -11,13 +11,13 @@ class MessageQueue {
         return this.queue.length;
     }
 
-    addMessage(message, id) {
+    addMessage(message) {
         // if it is an empty set
         if (this.queue.length == 0) {
-            message.id = (message.id + 1) * 1000 + id;
+            var date = message.start_date
+            //console.log(date.getTime())
             this.queue.push(message);
         } else {
-            message.id = (message.id + 1) * 1000 + id;
             for (let index = 0; index < this.queue.length;index++) {
                 if (this.queue[index].id == message.id) {
                     return;
@@ -26,6 +26,7 @@ class MessageQueue {
             //this.queue.push(message);
 
             // insert
+            /**
             for (let index = this.queue.length - 1; index >= 0; index--) {
                 if (compare(this.queue[index], message)) {
                     this.queue[index + 1] = this.queue[index];
@@ -35,6 +36,7 @@ class MessageQueue {
                 }
             }
             this.queue[0] = message;
+            */
         }
     }
 

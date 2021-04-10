@@ -1,21 +1,36 @@
-// express
-const express = require('express');
-const app = express();
-const port = 8888;
-
-// message queue
-//var messageQueue = new Array();
+// 消息队列 Message Queue
 const { MessageQueue } = require("./MessageQueue");
 var messageQueue = new MessageQueue();
 
-// configuration file
-var fs = require('fs');
-var mainfest = fs.readFileSync('./mainfest.json');
-mainfest = (JSON.parse(mainfest));
+// 引入Id分配者
+//有没有绝对路径用
 
-// server host
-const host = "127.0.0.1/";
-var http = require('http');
+// 更新队列
+setInterval(function () {
+    //messageQueue.update();
+    //console.log("Message Queue Updated");
+}, 1000);
+
+
+// 导入数据
+const holidayService = require('../holiday/holidayService')
+setInterval(function () {
+
+    var data = holidayService.getHolidays()
+    for (var j in data) {
+        messageQueue.addMessage(data[j]);
+    }
+    
+}, 1000);
+
+module.exports.getData = function () {
+    return messageQueue.getQueue()
+}
+
+/** 
+// express
+const express = require('express');
+const app = express();
 
 // allocate each component an Id
 // id range from 1 - 100, message from each componenent will be re-calculated an unique id,
@@ -88,19 +103,15 @@ var hashTable = new HashMap();
 }
 
 // clear out-of-date messages
-setInterval(function () {
-    messageQueue.update();
-    console.log("clear");
-}, 1000);
+
 
 /* The main interface for the API.It would return a list of messages.
  */
+
+/**
 app.get('/', (req, res) => {
     //messageQueue[messageCount] = messageCount;
     //messageCount++;
     res.send(messageQueue.getQueue())
 })
-
-app.listen(port, () => {
-    console.log('Running')
-});
+*/
