@@ -14,13 +14,14 @@ setInterval(function () {
 
 // 导入数据
 const holidayService = require('../holiday/holidayService')
-setInterval(function () {
 
+// 需要回调函数
+setInterval(function () {
     var data = holidayService.getHolidays()
-    for (var j in data) {
-        messageQueue.addMessage(data[j]);
+    for (var index = 0; index < data.length; index++) {
+        messageQueue.addMessage(data[index])
+        
     }
-    
 }, 1000);
 
 module.exports.getData = function () {

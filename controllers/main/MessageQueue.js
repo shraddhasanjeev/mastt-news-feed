@@ -12,6 +12,9 @@ class MessageQueue {
     }
 
     addMessage(message) {
+
+        this.queue.push(message)
+        /**
         // if it is an empty set
         if (this.queue.length == 0) {
             var date = message.start_date
@@ -37,7 +40,6 @@ class MessageQueue {
             }
             this.queue[0] = message;
             */
-        }
     }
 
     update() {
