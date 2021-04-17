@@ -20,15 +20,9 @@ with open('./controllers/holiday/scripts/address.json', 'r', encoding='utf8') as
                     des = td_arr[3].string
                 else:
                     des = td_arr[3].string +" " + td_arr[4].string
-                    data = {
-                        "id": 1,
-                        "title": country+ ": " + td_arr[2].string,
-                        "image": "a URL",
-                        "start_date": td_arr[1].string,
-                        "end_date": td_arr[1].string,
-                        "catagory": "holiday",
-                        "summary": des
-                        }
+                    data = (country,td_arr[2].string,td_arr[1].string,des)
+                    for element in data:
+                        element.replace(",", " ")
                     list.append(data)
 
 print(list)

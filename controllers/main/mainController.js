@@ -1,6 +1,6 @@
-const server = require('./serverService')
+const service = require('./serverService')
 
-module.exports.welcomePage = function (req, res) {
-    res.send(server.getData())
+module.exports.getData = function (req, res) {
+    res.json(service.getData())
     res.end()
 }

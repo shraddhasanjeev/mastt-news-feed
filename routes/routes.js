@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/main/mainController');
+
 
 /* Main */
-router.get('/', controller.welcomePage);
+const mainRouter = require('./mainRoutes');
+router.get('/main', mainRouter)
 
 /* Holiday */
 const holidayRouter = require('./holidayRoutes');
