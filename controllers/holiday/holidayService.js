@@ -1,30 +1,31 @@
-/*=== Message Queue === */
-const { response } = require("../../app");
 const { MessageQueue } = require("./MessageQueue");
 var messageQueue = new MessageQueue();
 
-/* === Interface === */
-module.exports.getHolidays = function () {
-    return messageQueue.getQueue();
+
+var thisYear = new Date().getFullYear()
+duration = (60*60*1000)*24 // 1 day
+
+async function update() {
+    let r1 = await checkForUpdate()
+    if (r1 == "Valid") {
+    } else if (r1 == "Updated") {
+        await updateData()
+    } else {
+        throw new Error("Failed to fetch last update date")
+    }
+    await extractInfo()
 }
 
-/* === Variables === */
-var thisYear = new Date().getFullYear()
-var duration = (60 * 60 * 1000) * 24 // 1 day
-
-var fs = require('fs')
-
-/* === Functions === */
 function checkForUpdate() {
     return new Promise(function (resolve, reject) {
         thisYear = new Date().getFullYear()
-        
+        var fs = require('fs')
         const lastFetch = parseInt(fs.readFileSync('./controllers/holiday/scripts/lastFetch.dat'))
-       
 
-        if(lastFetch == thisYear) {
+
+        if (lastFetch == thisYear) {
             resolve("Valid")
-        }else {
+        } else {
             resolve("Updated")
         }
     })
@@ -32,6 +33,7 @@ function checkForUpdate() {
 
 function updateData() {
     return new Promise(function (resolve, reject) {
+        var fs = require('fs')
         const spawn = require('child_process').spawn;
         const ls = spawn('python', ['./controllers/holiday/scripts/holidayFetch.py', 'arg1', 'arg2']);
 
@@ -41,7 +43,7 @@ function updateData() {
         });
 
         ls.stderr.on('data', (data) => {
-            reject("Failed to download data" +  `${data}`);
+            reject("Failed to download data" + `${data}`);
         });
 
         ls.on('close', (code) => {
@@ -142,4 +144,13 @@ function extractInfo() {
 }
 
 module.exports.initialize = function () {
+    update()
+
+    setInterval(function () {
+        update()
+    }, duration)
+}
+
+module.exports.getHolidays = function () {
+    return messageQueue.getQueue();
 }
