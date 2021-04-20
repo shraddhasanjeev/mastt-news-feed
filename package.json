@@ -4,9 +4,9 @@
   "description": "Remote Working Dashboard - News Feed for Mastt as part of USYD Capstone Semester 1, 2021 project.",
   "main": "app.js",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "response": "^0.1.0"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"

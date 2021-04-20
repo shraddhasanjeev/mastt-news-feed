@@ -1,9 +1,7 @@
-// 消息队列 Message Queue
-const { MessageQueue } = require("./MessageQueue");
-var messageQueue = new MessageQueue();
+
 
 // 引入Id分配者
-//有没有绝对路径用
+
 
 // 更新队列
 setInterval(function () {
@@ -12,10 +10,17 @@ setInterval(function () {
 }, 1000);
 
 
-// 导入数据
+/* Message Queue */
+const { MessageQueue } = require("./MessageQueue");
+var messageQueue = new MessageQueue();
+
+/* 引入模块service */
 const holidayService = require('../holiday/holidayService')
 
 // 需要回调函数
+holidayService.initialize()
+
+
 setInterval(function () {
     var data = holidayService.getHolidays()
     for (var index = 0; index < data.length; index++) {
