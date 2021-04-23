@@ -64,6 +64,7 @@ function extractInfo() {
                 retrunedData.lastIndexOf(')')
             )).split('), (')
             for (var index = 0; index < arr.length; index++) {
+                console.log(index + ": " + arr[index])
                 var temp = arr[index].split(",")
                 var month = -1
                 var day = 0
