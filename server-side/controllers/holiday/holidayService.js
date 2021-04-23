@@ -67,7 +67,6 @@ function extractInfo() {
                 var temp = arr[index].split(",")
                 var month = -1
                 var day = 0
-                // 增加try语句提高容错率
                 if (temp[2].length == 9) {
                     switch (temp[2].substring(2, 5)) {
                         case "Jan":
@@ -122,7 +121,8 @@ function extractInfo() {
 
                 var str = "{"
                     + "\"id\" :" + index + ","
-                    + "\"title\": \"" + temp[0] + ":" + temp[1].replace(/\"/g, '') + "\","
+                    + "\"city\": \"" + temp[0] + "\","
+                    + "\"title\": \""+ temp[1].replace(/\"/g, '') + "\","
                     + "\"image\":" + "\"A URL\","
                     + "\"start_date\": \"" + dateString1 + "\","
                     + "\"end_date\": \"" + dateString2 + "\","
@@ -151,6 +151,26 @@ module.exports.initialize = function () {
     }, duration)
 }
 
-module.exports.getHolidays = function () {
+module.exports.getAllHolidays = function () {
     return messageQueue.getQueue();
+}
+
+module.exports.getHolidays = function () {
+    var array = new Array()
+    var cities = new Array()
+
+    for (index = 0, len = messageQueue.getSize(); index < len; index++) {
+        let city = messageQueue.getQueue()[index].city
+        let date = new Date(messageQueue.getQueue()[index].start_date).getTime()
+        let now = new Date().getTime()
+        if (now > date) {
+            continue
+        } else {
+            if (cities.indexOf(city) == -1) {
+                cities.push(city)
+                array.push(messageQueue.getQueue()[index])
+            }
+        }
+    }
+    return array;
 }
