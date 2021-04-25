@@ -20,7 +20,7 @@ function checkForUpdate() {
     return new Promise(function (resolve, reject) {
         thisYear = new Date().getFullYear()
         var fs = require('fs')
-        const lastFetch = parseInt(fs.readFileSync('./controllers/holiday/scripts/lastFetch.dat'))
+        const lastFetch = parseInt(fs.readFileSync('./app/controllers/holiday/scripts/lastFetch.dat'))
 
 
         if (lastFetch == thisYear) {
@@ -35,10 +35,10 @@ function updateData() {
     return new Promise(function (resolve, reject) {
         var fs = require('fs')
         const spawn = require('child_process').spawn;
-        const ls = spawn('python', ['./controllers/holiday/scripts/holidayFetch.py', 'arg1', 'arg2']);
+        const ls = spawn('python', ['./app/controllers/holiday/scripts/holidayFetch.py', 'arg1', 'arg2']);
 
         ls.stdout.on('data', (data) => {
-            fs.writeFileSync('./controllers/holiday/scripts/lastFetch.dat', thisYear.toString())
+            fs.writeFileSync('./app/controllers/holiday/scripts/lastFetch.dat', thisYear.toString())
             resolve("Updated")
         });
 
@@ -54,7 +54,7 @@ function updateData() {
 function extractInfo() {
     return new Promise(function (resolve, reject) {
         const spawn = require('child_process').spawn;
-        const ls = spawn('python', ['./controllers/holiday/scripts/htmlParser.py', 'arg1', 'arg2']);
+        const ls = spawn('python', ['./app/controllers/holiday/scripts/htmlParser.py', 'arg1', 'arg2']);
 
         ls.stdout.on('data', (data) => {
             retrunedData = `${data}`
@@ -67,7 +67,7 @@ function extractInfo() {
                 var temp = arr[index].split(",")
                 var month = -1
                 var day = 0
-                // Ôö¼ÓtryÓï¾äÌá¸ßÈÝ´íÂÊ
+                // ï¿½ï¿½ï¿½ï¿½tryï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý´ï¿½ï¿½ï¿½
                 if (temp[2].length == 9) {
                     switch (temp[2].substring(2, 5)) {
                         case "Jan":

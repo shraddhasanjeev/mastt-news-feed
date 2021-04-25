@@ -4,11 +4,11 @@ import json
 #会读取调用该脚本的文件路径
 
 list = []
-with open('./controllers/holiday/scripts/address.json', 'r', encoding='utf8') as f:
+with open('./app/controllers/holiday/scripts/address.json', 'r', encoding='utf8') as f:
     json_data = json.load(f)
     for record in json_data:
         country = record['country']
-        file = open('./controllers/holiday/holidayData/' + country +'.html',encoding='utf-8' )
+        file = open('./app/controllers/holiday/holidayData/' + country +'.html',encoding='utf-8' )
         soup = BeautifulSoup(file, features="html.parser")
 
         tr_arr = soup.table.find_all("tr")
