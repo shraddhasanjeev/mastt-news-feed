@@ -5,9 +5,10 @@
   "main": "app.js",
   "dependencies": {
     "express": "^4.17.1",
-    "request": "^2.88.2"
+    "mongoose": "^5.12.5",
+    "request": "^2.88.2",
+    "xmlhttprequest": "^1.8.0"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
