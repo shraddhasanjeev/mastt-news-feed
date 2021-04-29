@@ -1,6 +1,7 @@
 const request = require('request');
 const config = require('../../config.json');
 const util = require('util')
+var newsSchema = require("../../models/newsSchema");
 
 
 
@@ -12,7 +13,10 @@ module.exports.fetchWeather = function(req,res){
 
         request(url, function (error, response, body) {
             if (!error && response.statusCode == 200) {
-            console.log(body);
+                var result = JSON.parse(body);
+                console.log(result);
+            // if(body.alerts )
+            // var ;
             res.status(200);
             }
         })

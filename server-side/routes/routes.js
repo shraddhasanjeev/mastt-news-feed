@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-var weatherController = require('../app/controllers/weather.controller');
+var weatherController = require('../app/controllers/weather/weather.controller');
 var newsController = require('../app/controllers/news/news.controller');
 
 /* Main */
