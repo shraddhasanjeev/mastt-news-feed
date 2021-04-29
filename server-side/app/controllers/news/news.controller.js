@@ -23,6 +23,7 @@ function fetchNews(req,res){
                         start_date: start_date,
                         end_date: end_date
                     })
+                    console.log(newsItem);
                     newsItem.save()
                     .catch(err => {
                         //console.log(err)

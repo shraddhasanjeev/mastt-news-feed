@@ -3,7 +3,7 @@ const config = require('../../config.json');
 const util = require('util')
 var weatherSchema = require("../../models/weatherSchema");
 
-
+var errors = [];
 
 module.exports.fetchWeather = function(req,res){
 
@@ -24,12 +24,16 @@ module.exports.fetchWeather = function(req,res){
                 weatherAlert.save(function(err){
                     if(err){
                         console.log(err);
-                        return handleError(err);
+                        errors.push(err);
                     }
                 })
             }
             }
         })
     });
-    res.status(200);
+    if (errors.length > 0){
+        res.status(500).send(err);
+    }
+    else
+        res.status(200).send("DONE")
 }
