@@ -12,9 +12,8 @@ function fetchNews(req,res){
             var result = JSON.parse(body);
             for(let i=0; i< result.totalResults; i++){
                 if(result.articles[i] != undefined){
-                    let start_date = Date.parse(result.articles[i]["publishedAt"])
+                    let start_date = new Date(result.articles[i]["publishedAt"])
                     let end_date = new Date(start_date);
-                    console.log(start_date.getDate());
                     end_date.setDate(start_date.getDate() + 1)
                     var newsItem = new newsSchema({
                         title: result.articles[i]["title"],
