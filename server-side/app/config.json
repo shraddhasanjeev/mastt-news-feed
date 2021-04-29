@@ -1,6 +1,7 @@
 {
     "tokens": {
-        "openweatherapi" : "ba21ad3c5ee233cb6ed93a261f758fc5"
+        "openweatherapi" : "ba21ad3c5ee233cb6ed93a261f758fc5",
+        "newsapi": "3d950b0274e345c59f1126c250d4176c"
     },
     "locationCoordinates": [
         {
@@ -13,5 +14,8 @@
             "latitude": "14.600437303553875",
             "longitude": "120.9842747489771"
         }
-    ]
+    ],
+    "countryCodes": {
+        "India": "in"
+    }
 }
