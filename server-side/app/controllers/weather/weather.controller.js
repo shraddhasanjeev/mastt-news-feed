@@ -1,7 +1,7 @@
 const request = require('request');
 const config = require('../../config.json');
 const util = require('util')
-var newsSchema = require("../../models/newsSchema");
+var weatherSchema = require("../../models/weatherSchema");
 
 
 
@@ -15,10 +15,21 @@ module.exports.fetchWeather = function(req,res){
             if (!error && response.statusCode == 200) {
                 var result = JSON.parse(body);
                 console.log(result);
-            // if(body.alerts )
-            // var ;
-            res.status(200);
+            if(result.alerts){
+                var weatherAlert = new weatherSchema();
+                weatherAlert.title = result.alerts.event;
+                weatherAlert.start_date = result.alerts.start;
+                weatherAlert.end_date = result.alerts.end;
+                weatherAlert.content = result.alerts.description;
+                weatherAlert.save(function(err){
+                    if(err){
+                        console.log(err);
+                        return handleError(err);
+                    }
+                })
+            }
             }
         })
     });
+    res.status(200);
 }
