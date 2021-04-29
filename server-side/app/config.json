@@ -2,14 +2,16 @@
     "tokens": {
         "openweatherapi" : "ba21ad3c5ee233cb6ed93a261f758fc5"
     },
-    "locationCoordinates": {
-        "hyderabad":{
+    "locationCoordinates": [
+        {
+            "cityName": "Hyderabad",
             "latitude": "17.404231321770673",
             "longitude": "78.47726777884779"
         },
-        "manilla":{
+        {
+            "cityName": "Manilla",
             "latitude": "14.600437303553875",
             "longitude": "120.9842747489771"
         }
-    }
+    ]
 }
