@@ -6,8 +6,9 @@
     "\\controllers\\holiday\\holidayData",
     "\\controllers\\holiday\\scripts",
     "\\controllers\\main",
-    "\\models"
+    "\\models",
+    "\\routes"
   ],
-  "SelectedNode": "\\controllers\\holiday\\holidayService.js",
+  "SelectedNode": "\\controllers\\holiday\\holidayController.js",
   "PreviewInSolutionExplorer": false
 }
