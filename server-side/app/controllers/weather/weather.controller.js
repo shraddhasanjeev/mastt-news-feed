@@ -15,24 +15,24 @@ module.exports.fetchWeather = function(req,res){
             if (!error && response.statusCode == 200) {
                 var result = JSON.parse(body);
                 console.log(result);
-            if(result.alerts){
-                var weatherAlert = new weatherSchema();
-                weatherAlert.title = result.alerts.event;
-                weatherAlert.start_date = result.alerts.start;
-                weatherAlert.end_date = result.alerts.end;
-                weatherAlert.content = result.alerts.description;
-                weatherAlert.save(function(err){
-                    if(err){
-                        console.log(err);
-                        errors.push(err);
-                    }
-                })
-            }
+                if(result.alerts){
+                    console.log("I'm in genuine alert");
+                    var weatherAlert = new weatherSchema();
+                    weatherAlert.title = result.alerts.event;
+                    weatherAlert.sourceName = result.alerts.sender_name;
+                    weatherAlert.start_date = result.alerts.start;
+                    weatherAlert.end_date = result.alerts.end;
+                    weatherAlert.content = result.alerts.description;
+                    weatherAlert.save().catch(err => {
+                        console.log(err)
+                        errors.push(err)
+                    });
+                }
             }
         })
     });
     if (errors.length > 0){
-        res.status(500).send(err);
+        res.status(500).send(errors);
     }
     else
         res.status(200).send("DONE")
