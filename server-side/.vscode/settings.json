@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/25d7f757-3110-4d49-a7e2-50f65c33a479/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/mastt-news-feed-server",
+    "appService.deploySubpath": "."
+}
