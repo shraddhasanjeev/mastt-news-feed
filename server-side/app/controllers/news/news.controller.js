@@ -34,7 +34,7 @@ function fetchNews(req,res){
         }
     })
     if (errors.length > 0){
-        res.status(500).send(err);
+        res.status(500).send(errors);
     }
     else
         res.status(200).send("DONE")
