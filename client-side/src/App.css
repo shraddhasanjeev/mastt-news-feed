@@ -1,4 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans&display=swap');
-.App{
+.card{
     margin: 10 auto;
+    color: white;
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+}
+.note{
+     margin: 10 auto;
+    color: white;
+    display: flex;
+    width: 100vw;
+    justify-content: center;
 }

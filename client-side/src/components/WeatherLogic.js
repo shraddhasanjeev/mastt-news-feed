@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import WeatherCard from './WeatherCard/component';
+import PulseLoader from 'react-spinners/PulseLoader'
 
 const WeatherLogic = ({ defaultLocation }) => {
-    const [query, setQuery] = useState("");
+
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [weather, setWeather] = useState({
@@ -34,46 +35,47 @@ const WeatherLogic = ({ defaultLocation }) => {
         setLoading(false);
     };
    
-    const handleSearch = (e) => {
-        e.preventDefault();
-        getWeather(query);
-    };
+
   
     useEffect(() => {
         getWeather(defaultLocation)
     
     }, [defaultLocation]);
 
+    if (error) {
+        return (
+            <div>
+                An error has occured
+                <button onClick={() => setError(false)}>RESET!</button>
+            </div>
+        );
+    }
+    
+    if (loading) {
+        return (
+            <div style={{ width: "200px", height: "240px" }}>
+                <PulseLoader color="lightgreen" />
+            </div>
+        );
+    }
+
     return (
-        <div>
-            {!loading && !error ? (
-                <div>
-                    <WeatherCard
-                        temp={weather.temp}
-                        condition={weather.condition}
-                        city={weather.city}
-                        country={weather.counrty}
-                    />
+            <div>
+                <WeatherCard
+                    temp={weather.temp}
+                    condition={weather.condition}
+                    city={weather.city}
+                    country={weather.country}
+                    getWeather={getWeather}
+                />
 
-                    <form>
-                        <input value={query} onChange={(e) => setQuery(e.target.value)} />
-                        <button onClick={(e) => handleSearch(e)}>Search</button>
-                    </form>
-                </div>
-            ) : loading ? (
-                <div>loading</div>
-            ) : !loading && error ? (
-                <div>
-                    An error has occured
-                     
-                    <button onClick={() => setError(false)}>RESET!</button>
-                </div>
-            ) : null}
-
-        </div>
+                    
+            </div>
+           
            
     
-    )
-}
+        )
+    }
+
  
 export default WeatherLogic;

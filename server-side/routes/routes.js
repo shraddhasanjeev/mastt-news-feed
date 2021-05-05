@@ -3,14 +3,14 @@ const router = express.Router();
 
 var weatherController = require('../app/controllers/weather/weather.controller');
 var newsController = require('../app/controllers/news/news.controller');
+var mainController = require('../app/controllers/main/mainController');
 
 /* Main */
-const mainRouter = require('./mainRoutes');
-router.get('/main', mainRouter)
+router.get('/main', mainController.getAllHolidays)
 
 /* Holiday */
 const holidayRouter = require('./holidayRoutes');
-router.get('/holiday', holidayRouter)
+//router.get('/holiday', holidayRouter)
 
 /* Weather API */
 router.get('/fetchWeather', weatherController.fetchWeather)
