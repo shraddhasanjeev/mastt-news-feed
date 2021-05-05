@@ -44,8 +44,7 @@ module.exports.getWeatherAlertsByCity = function(req,res){
     const endDate = req.query.endDate;
 
     console.log(city)
-    // const docquery = weatherSchema.find({city: city});
-    const docquery = weatherSchema.find();
+    const docquery = weatherSchema.find({city: city});
     docquery.exec().then(weatherAlert => {
       res.json(weatherAlert);
     }).catch(err => {
