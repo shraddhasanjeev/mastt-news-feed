@@ -1,7 +1,7 @@
 //var mongoClient = require('./masttDb')
 const mongoose = require('mongoose');
 
-const options = {discriminatorKey: 'category'};
+const options = {discriminatorKey: 'category', read: 'nearest'};
 const masterFeedSchema = new mongoose.Schema({
     title: {
         type: String,

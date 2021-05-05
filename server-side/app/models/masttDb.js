@@ -13,7 +13,7 @@ function connect() {
     useFindAndModify: false,
     useCreateIndex: true,
   },  function () {
-    console.log('mongodb connected')
+    console.log('mongodb connected to Azure')
   });
 }
 /* 

@@ -16,6 +16,13 @@
         }
     ],
     "countryCodes": {
-        "India": "in"
+        "Argentina": "ar",
+        "Australia": "au",
+        "India": "in",
+        "Phillippines": "ph" 
+    },
+    "intervals":{
+        "news": 10000,
+        "weather": 10000
     }
 }
