@@ -13,7 +13,8 @@ const holidayRouter = require('./holidayRoutes');
 router.get('/holiday', holidayRouter)
 
 /* Weather API */
-router.get('/fetchWeather', weatherController.fetchWeather)
+router.get('/fetchWeatherAlerts', weatherController.fetchWeatherAlertsFromThirdParty);
+router.get('/getWeatherAlertsByCity', weatherController.getWeatherAlertsByCity);
 
 /* News API */
 router.get('/fetchNews', newsController.fetchNews)
