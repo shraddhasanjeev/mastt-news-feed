@@ -6,6 +6,10 @@ const weatherApiSchema = mongoose.Schema({
     sourceName: {
         type: String,
         required: true
+    },
+    city: {
+        type: String,
+        required: true
     }
 }, options);
 
