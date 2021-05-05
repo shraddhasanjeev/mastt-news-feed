@@ -5,8 +5,10 @@
     "\\app\\controllers",
     "\\app\\controllers\\holiday",
     "\\app\\controllers\\main",
+    "\\app\\controllers\\weather",
+    "\\app\\models",
     "\\routes"
   ],
-  "SelectedNode": "\\app\\controllers\\holiday\\holidayService.js",
+  "SelectedNode": "\\app\\controllers\\main\\serverService.js",
   "PreviewInSolutionExplorer": false
 }

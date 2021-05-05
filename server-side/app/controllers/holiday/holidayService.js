@@ -3,7 +3,7 @@ var messageQueue = new MessageQueue();
 var holidaySchema = require("../../models/holidaySchema");
 
 var thisYear = new Date().getFullYear()
-duration = (60*60*1000)*24 // 1 day
+duration = (60 * 60 * 1000) * 24 // 1 day
 
 async function update() {
     let r1 = await checkForUpdate()
@@ -119,8 +119,8 @@ function extractInfo() {
                         dateString1 = new Date(thisYear, month, day).toDateString()
                         dateString2 = new Date(thisYear, month, day + 1).toDateString()
                     }
-                    var title = temp[0].replace(/^(\s|\')+|(\s|\')+$/g, '')
-                    var city = temp[1].replace(/\"/g, '').replace(/^(\s|\')+|(\s|\')+$/g, '')
+                    var city = temp[0].replace(/^(\s|\')+|(\s|\')+$/g, '')
+                    var title = temp[1].replace(/\"/g, '').replace(/^(\s|\')+|(\s|\')+$/g, '')
                     var content = temp[3].replace(/\"/g, '').replace("\\xa0", "").replace(/^(\s|\')+|(\s|\')+$/g, '')
 
                     saveToDb(title, city, content, dateString1, dateString2)
