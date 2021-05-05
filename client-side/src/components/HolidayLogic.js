@@ -11,7 +11,7 @@ const HolidayLogic = ({ presetCity }) => {
    
 
     const getHoliday = async (q) => {
-        const apiRes = await fetch(``);
+        const apiRes = await fetch(`http://localhost:3000/holiday/`);
         const resJSON = await apiRes.json();
         setHoliday({
             city: q,
@@ -26,11 +26,10 @@ const HolidayLogic = ({ presetCity }) => {
 
         return (
             <div>
-                UP NEXT
                 <HolidayNote
                     city={presetCity}
-                    holidayName={holiday.holidayName}
-                    holidayDate={holiday.holidayDate}
+                    holidayName={holiday.title}
+                    holidayDate={holiday.start_date}
                 />
             </div>
         )

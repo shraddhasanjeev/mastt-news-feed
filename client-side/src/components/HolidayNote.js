@@ -8,14 +8,14 @@ const HolidayNote = ({ city, holidayName, holidayDate }) => {
   
 
   const Note = styled.div`
-    background: red;
+    background: blue;
     width: 200px;
     height: 100px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    border-radius: 15px;
+    border-radius: 40px;
   `;
 
 
@@ -26,7 +26,7 @@ const HolidayNote = ({ city, holidayName, holidayDate }) => {
       transition={{ duration: 0.5 }}
     >
       <Note>Up next in {city}:<br/>
-        Easter in 3 days
+        {holidayName} starting from {holidayDate}
        
       </Note>
     </motion.div>

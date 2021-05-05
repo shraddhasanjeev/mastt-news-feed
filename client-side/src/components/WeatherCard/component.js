@@ -28,6 +28,8 @@ const WeatherCard = ({ temp, condition,city,country,getWeather }) => {
       justify-content: space-between;
       align-items: center;
       border-radius: 15px;
+      display: flex;
+      color: white;
     `;
     
     return (

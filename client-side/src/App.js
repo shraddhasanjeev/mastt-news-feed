@@ -11,12 +11,12 @@ import {
 function App() {
     return (
         <Router>
-            <Switch>
-                <Route exact path="/" component={Main} />
-                <Route exact path="/test" component={Table}/>
-            </Switch>
+          <Switch>
+            <Route exact path="/" component={Main} />
+            <Route exact path="/test" component={Table} />
+          </Switch>
         </Router>
-        )
+    );
 }
 
 export default App;
