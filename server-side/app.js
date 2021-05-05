@@ -4,6 +4,12 @@ const path = require('path');
 const port = 3000;
 const azurePort = process.env.PORT;
 
+/* Connect to Azure MongoDB */
+require("./app/models/masttDb").connect()
+
+/* Initialise Background running function */
+require("./app/controllers/main/schedule.controller");
+
 app.use(express.static(__dirname + "/app/views"));
 
 /* Routers */
@@ -14,5 +20,5 @@ app.use('/', router )
 app.listen(port, function () {
 	console.log('News Feed app listening on port 3000!')
 });
-	
+
 module.exports = app;

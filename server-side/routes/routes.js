@@ -17,6 +17,6 @@ router.get('/fetchWeatherAlerts', weatherController.fetchWeatherAlertsFromThirdP
 router.get('/getWeatherAlertsByCity', weatherController.getWeatherAlertsByCity);
 
 /* News API */
-router.get('/fetchNews', newsController.fetchNews)
+router.get('/getNews', newsController.getNews)
 
 module.exports = router;

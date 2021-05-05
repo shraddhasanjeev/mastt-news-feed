@@ -13,9 +13,26 @@
             "cityName": "Manilla",
             "latitude": "14.600437303553875",
             "longitude": "120.9842747489771"
+        },
+        {
+            "cityName": "Sydney",
+            "latitude": "-33.867662015138315",
+            "longitude": "151.2091017163976"
+        },
+        {
+            "cityName": "Buenos Aires",
+            "latitude": "-34.60082735951941",
+            "longitude": "-58.44222726318848"
         }
     ],
     "countryCodes": {
-        "India": "in"
+        "Argentina": "ar",
+        "Australia": "au",
+        "India": "in",
+        "Phillippines": "ph" 
+    },
+    "intervals":{
+        "news": 10000,
+        "weather": 10000
     }
 }
