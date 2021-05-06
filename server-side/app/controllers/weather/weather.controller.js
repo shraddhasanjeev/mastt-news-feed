@@ -2,76 +2,66 @@ const request = require('request');
 const config = require('../../config.json');
 const util = require('util')
 var weatherSchema = require("../../models/weatherSchema");
-
 var errors = [];
+const epochThreeMinutes = 180000;
 
-module.exports.fetchWeatherAlertsFromThirdParty = function(){
+module.exports.fetchWeatherFromThirdParty = function(){
 
     config.locationCoordinates.forEach(city => {
 
-        var weatherAlert = new weatherSchema();
-        var url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + city.latitude + "&lon=" + city.longitude + "&exclude=current,minutely,hourly,daily&appid=" + config.tokens.openweatherapi;
+        var weather = new weatherSchema();
+        var url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + city.latitude + "&lon=" + city.longitude + "&exclude=minutely,hourly,daily&appid=" + config.tokens.openweatherapi;
         
-        weatherAlert.city = city.cityName;
+        weather.city = city.cityName;
         request(url, function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 var result = JSON.parse(body);
+                console.log("1");
                 console.log(result);
+                if(result.current){
+                    var epochDate = parseInt(result.current.dt);
+                    if (epochDate < 10000000000)
+                        epochDate *= 1000;
+                    weather.start_date = epochDate;
+                    weather.end_date = epochDate + epochThreeMinutes;
+                    weather.temperature = result.current.temp;
+                    weather.outlook = result.current.weather[0].main;
+                }
                 if(result.alerts){
-                    weatherAlert.title = result.alerts.event;
-                    weatherAlert.sourceName = result.alerts.sender_name;
-                    weatherAlert.start_date = result.alerts.start;
-                    weatherAlert.end_date = result.alerts.end;
-                    weatherAlert.content = result.alerts.description;
-                    weatherAlert.save().catch(err => {
-                        console.log(err)
-                        errors.push(err)
+                    result.alerts.forEach(alert => {
+                        weather.alert.alertEvent = alert.event;
+                        weather.alert.sourceName = alert.sender_name;
+                        weather.alert.start = alert.start;
+                        weather.alert.end = alert.end;
+                        weather.alert.description = alert.description;
                     });
                 }
+                else{
+                    weather.alert = null;
+                }
+                console.log(weather);
+                weather.save().catch(err => {
+                    console.log(err)
+                    errors.push(err)
+                });
             }
         })
     });
-/* 
-    config.locationCoordinates.forEach(city => {
-
-        var weatherAlert = new weatherSchema();
-        var url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + city.latitude + "&lon=" + city.longitude + "&exclude=current,minutely,hourly,daily&appid=" + config.tokens.openweatherapi;
-        
-        weatherAlert.city = city.cityName;
-        request(url, function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-                var result = JSON.parse(body);
-                console.log(result);
-                // if(result.alerts){
-                    weatherAlert.title = "Heat Advisory";
-                    weatherAlert.sourceName = "NWS Tulsa";
-                    weatherAlert.start_date = "1597341600";
-                    weatherAlert.end_date = "1597366800";
-                    weatherAlert.content = "...HEAT ADVISORY REMAINS IN EFFECT FROM 1 PM THIS AFTERNOON TO\n8 PM CDT THIS EVENING...\n* WHAT...Heat index values of 105 to 109 degrees expected.\n* WHERE...Creek, Okfuskee, Okmulgee, McIntosh, Pittsburg,\nLatimer, Pushmataha, and Choctaw Counties.\n* WHEN...From 1 PM to 8 PM CDT Thursday.\n* IMPACTS...The combination of hot temperatures and high\nhumidity will combine to create a dangerous situation in which\nheat illnesses are possible.";
-                    weatherAlert.save().catch(err => {
-                        console.log(err)
-                        errors.push(err)
-                    });
-                // }
-            }
-        })
-    });
- */
 
     if (errors.length > 0){
         console.log(errors);
     }
 }
 
-module.exports.getWeatherAlertsByCity = function(req,res){
+module.exports.getWeatherByCity = function(req,res){
     const city = req.query.city;
     const startDate = req.query.startDate;
     const endDate = req.query.endDate;
 
     console.log(city)
     const docquery = weatherSchema.find({city: city});
-    docquery.exec().then(weatherAlert => {
-      res.json(weatherAlert);
+    docquery.exec().then(weather => {
+      res.json(weather);
     }).catch(err => {
       res.status(500).send(err);
     });
