@@ -8,11 +8,11 @@ def getHtml(url):
  
 def saveHtml(file_name, file_content):
     # 注意windows文件命名的禁用符，比如 /
-    with open('./controllers/holiday/holidayData/' + file_name.replace('/', '_') + ".html", "wb") as f:
+    with open('./app/controllers/holiday/holidayData/' + file_name.replace('/', '_') + ".html", "wb") as f:
         # 写文件用bytes而不是str，所以要转码
         f.write(file_content)
 
-with open('./controllers/holiday/scripts/address.json', 'r', encoding='utf8') as f:
+with open('./app/controllers/holiday/scripts/address.json', 'r', encoding='utf8') as f:
     json_data = json.load(f)
     for record in json_data:
         url = record['link']
