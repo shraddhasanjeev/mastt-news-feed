@@ -3,10 +3,6 @@ const mongoose = require('mongoose');
 
 const options = {discriminatorKey: 'category', read: 'nearest'};
 const masterFeedSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true
-    },
     start_date: {
         type: Date,
         default: Date.now,
@@ -17,10 +13,6 @@ const masterFeedSchema = new mongoose.Schema({
         required: true
     },
     category: {
-        type: String,
-        required: true
-    },
-    content: {
         type: String,
         required: true
     }
