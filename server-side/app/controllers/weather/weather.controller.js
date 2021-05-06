@@ -5,7 +5,7 @@ var weatherSchema = require("../../models/weatherSchema");
 
 var errors = [];
 
-module.exports.fetchWeatherAlertsFromThirdParty = function(req,res){
+module.exports.fetchWeatherAlertsFromThirdParty = function(){
 
     config.locationCoordinates.forEach(city => {
 
@@ -31,11 +31,36 @@ module.exports.fetchWeatherAlertsFromThirdParty = function(req,res){
             }
         })
     });
+/* 
+    config.locationCoordinates.forEach(city => {
+
+        var weatherAlert = new weatherSchema();
+        var url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + city.latitude + "&lon=" + city.longitude + "&exclude=current,minutely,hourly,daily&appid=" + config.tokens.openweatherapi;
+        
+        weatherAlert.city = city.cityName;
+        request(url, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                var result = JSON.parse(body);
+                console.log(result);
+                // if(result.alerts){
+                    weatherAlert.title = "Heat Advisory";
+                    weatherAlert.sourceName = "NWS Tulsa";
+                    weatherAlert.start_date = "1597341600";
+                    weatherAlert.end_date = "1597366800";
+                    weatherAlert.content = "...HEAT ADVISORY REMAINS IN EFFECT FROM 1 PM THIS AFTERNOON TO\n8 PM CDT THIS EVENING...\n* WHAT...Heat index values of 105 to 109 degrees expected.\n* WHERE...Creek, Okfuskee, Okmulgee, McIntosh, Pittsburg,\nLatimer, Pushmataha, and Choctaw Counties.\n* WHEN...From 1 PM to 8 PM CDT Thursday.\n* IMPACTS...The combination of hot temperatures and high\nhumidity will combine to create a dangerous situation in which\nheat illnesses are possible.";
+                    weatherAlert.save().catch(err => {
+                        console.log(err)
+                        errors.push(err)
+                    });
+                // }
+            }
+        })
+    });
+ */
+
     if (errors.length > 0){
-        res.status(500).send(errors);
+        console.log(errors);
     }
-    else
-        res.status(200).send("DONE");
 }
 
 module.exports.getWeatherAlertsByCity = function(req,res){
