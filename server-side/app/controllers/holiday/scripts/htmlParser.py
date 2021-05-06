@@ -7,7 +7,7 @@ list = []
 with open('./app/controllers/holiday/scripts/address.json', 'r', encoding='utf8') as f:
     json_data = json.load(f)
     for record in json_data:
-        country = record['country']
+        country = record['country'].replace('\'', '')
         file = open('./app/controllers/holiday/holidayData/' + country +'.html',encoding='utf-8' )
         soup = BeautifulSoup(file, features="html.parser")
 
@@ -20,9 +20,7 @@ with open('./app/controllers/holiday/scripts/address.json', 'r', encoding='utf8'
                     des = td_arr[3].string
                 else:
                     des = td_arr[3].string +" " + td_arr[4].string
-                    data = (country,td_arr[2].string,td_arr[1].string,des)
-                    for element in data:
-                        element.replace(",", " ")
+                    data = (country,td_arr[2].string.replace('\'', '').replace(',', ''),td_arr[1].string.replace('\'', '').replace(',', ''),des.replace('\'', '').replace(',', ''))
                     list.append(data)
 
 print(list)

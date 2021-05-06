@@ -1,14 +1,24 @@
-import React, {useState, useEffect} from 'react';
-import './App.css';
-import WeatherLogic from './components/WeatherLogic';
+import Main from './Main'
+import News from './News'
+import Holiday from './Holiday'
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Redirect
+} from "react-router-dom";
+
 
 function App() {
-  return (
-    <div className="App">
-      <WeatherLogic defaultLocation="Sydney, AU" />
-      <WeatherLogic defaultLocation="Sydney, AU" />
-    </div>
-  );
+    return (
+        <Router>
+            <Switch>
+                <Route exact path="/" component={Main} />
+                <Route exact path="/news" component={News} />
+                <Route exact path="/holidays" component={Holiday} />
+            </Switch>
+        </Router>
+        )
 }
 
 export default App;
