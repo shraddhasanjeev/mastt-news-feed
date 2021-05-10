@@ -2,7 +2,8 @@ import React from 'react';
 import axios from "axios"
 import "./table.css"
 
-const rows = [];  
+const rows = [];
+const acountry = "Australia";
 var num = -1;
 var history = new Array();
 //router.get('/holiday', mainController.getAllHolidays)
@@ -15,26 +16,28 @@ class Holiday extends React.Component {
             msg:false
         }
     }
+    
 
     componentWillMount() {
         axios({
-            method: "GET",
-            url: 'http://localhost:3000/holiday/',
+          method: "GET",
+          url:
+            "https://mastt-news-feed-server.azurewebsites.net/getAustraliaHoliday",
         })
-            .then((response) => {
-                num = response.data.length;
-                for (let y = 0; y < num; y += 1) {
-                    history[y] = response.data[y];
-                }
+          .then((response) => {
+            num = response.data.length;
+            for (let y = 0; y < num; y += 1) {
+              history[y] = response.data[y];
+            }
 
-                this.setState({
-                    msg: true
-                });
-                console.log("Finished")
-            })
-            .catch(function (error) {
-                console.log("Error");
+            this.setState({
+              msg: true,
             });
+            console.log("Finished");
+          })
+          .catch(function (error) {
+            console.log("Error");
+          });
     }
 
     render() {

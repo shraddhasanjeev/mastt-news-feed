@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 import HolidayLogic from './HolidayLogic';
 
-const HolidayNote = ({ city, holidayName, holidayDate }) => {
+const HolidayNote = ({ country, holidayName, holidayStartDate, holidayEndDate }) => {
   
   
 
@@ -25,8 +25,8 @@ const HolidayNote = ({ city, holidayName, holidayDate }) => {
       animate={{ scale: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <Note>Up next in {city}:<br/>
-        {holidayName} starting from {holidayDate}
+      <Note>Up next in {country}:<br/>
+        {holidayName} starting from {holidayStartDate} ending in {holidayEndDate}
        
       </Note>
     </motion.div>

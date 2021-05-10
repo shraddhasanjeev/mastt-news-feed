@@ -6,7 +6,9 @@ const News = () => {
 
     useEffect(() => {
         setTimeout(async () => {
-            const res = await fetch('https://jsonplaceholder.typicode.com/posts')
+            const res = await fetch(
+              "https://mastt-news-feed-server.azurewebsites.net/getNews"
+            );
             const data = await res.json();
             setArticles(data);
         },2000)
@@ -16,16 +18,18 @@ const News = () => {
       <div className="articles">
         <h1>News Feed</h1>
 
-       {articles && articles.map(article => (
-        <div className="article" key={ article.id }>
-          <h3>{ article.title }</h3>
-          <p>{ article.body }</p>
-        </div>
-      ))}
+        {articles &&
+          articles.map((article) => (
+            <div className="article" key={article.id}>
+              <img src={article.image}>news image</img>
+              <h3>{article.title}</h3>
+              <p>{article.content}</p>
+            </div>
+          ))}
 
-      {!articles && [1,2,3,4,5].map((n) => <SkeletonArticle key={n} />)}
-    </div>
-  )
+        {!articles && [1, 2, 3, 4, 5].map((n) => <SkeletonArticle key={n} />)}
+      </div>
+    );
 }
 
 

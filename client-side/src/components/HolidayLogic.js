@@ -1,39 +1,39 @@
 import React, { useState, useEffect } from "react";
-import HolidayNote from './HolidayNote';
+import HolidayNote from "./HolidayNote";
 
-const HolidayLogic = ({ presetCity }) => {
-    const [holiday, setHoliday] = useState({
-    
-    city: null,
+const HolidayLogic = ({ presetCountry }) => {
+  const [holiday, setHoliday] = useState({
+    country: null,
     holidayName: null,
-    holidayDate: null,
+    holidayStartDate: null,
+    holidayEndDate: null,
+  });
+
+  const getHoliday = async (q) => {
+    const apiRes = await fetch(
+      `https://mastt-news-feed-server.azurewebsites.net/getAustraliaHoliday`
+    );
+    const resJSON = await apiRes.json();
+    setHoliday({
+      country: resJSON.city,
+      holidayName: resJSON.title,
+      holidayStartDate: resJSON.start_date,
+      holidayStartDate: resJSON.end_date,
     });
-   
+  };
 
-    const getHoliday = async (q) => {
-        const apiRes = await fetch(`http://localhost:3000/holiday/`);
-        const resJSON = await apiRes.json();
-        setHoliday({
-            city: q,
-            holidayName: resJSON.holidayName,
-            holidayDate: resJSON.holidayDate,
-        });
-    };
+  
 
-        useEffect(() => {
-            getHoliday(presetCity);
-        }, [presetCity]);
-
-        return (
-            <div>
-                <HolidayNote
-                    city={presetCity}
-                    holidayName={holiday.title}
-                    holidayDate={holiday.start_date}
-                />
-            </div>
-        )
-    };
-
+  return (
+    <div>
+      <HolidayNote
+        country={holiday.country}
+        holidayName={holiday.holidayName}
+        holidayStartDate={holiday.holidayStartDate}
+        holidayEndDate={holiday.holidayEndDate}
+      />
+    </div>
+  );
+};
 
 export default HolidayLogic;
