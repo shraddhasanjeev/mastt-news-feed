@@ -3,6 +3,10 @@ var masterFeed = require("./masterFeed");
 
 const options = {discriminatorKey: 'category'};
 const newsApiSchema = mongoose.Schema({
+    title: {
+        type: String,
+        required: true
+    },
     country: {
         type: String,
         required: true
@@ -13,6 +17,10 @@ const newsApiSchema = mongoose.Schema({
     },
     author: String,
     image: {
+        type: String,
+        required: true
+    },
+    content: {
         type: String,
         required: true
     }
