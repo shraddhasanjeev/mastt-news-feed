@@ -9,7 +9,7 @@ const Condition = ({ temp, condition }) => {
       <>
         <div style={{ fontSize: "1.8em",gridColumn:"2/span 1",
       gridRow: "4/span 1", }}>
-          <Reel theme={reelStyle} text={`${temp}°C`} duration={"3000"}/>
+          <Reel theme={reelStyle} text={`${temp}°C`} duration={3000}/>
           <State>{condition}</State>
         </div>
       </>
