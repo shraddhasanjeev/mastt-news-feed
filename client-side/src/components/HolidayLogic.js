@@ -9,9 +9,9 @@ const HolidayLogic = ({ presetCountry }) => {
     holidayEndDate: null,
   });
 
-  const getHoliday = async (q) => {
+  const getHoliday = async (a) => {
     const apiRes = await fetch(
-      `https://mastt-news-feed-server.azurewebsites.net/getAustraliaHoliday`
+      `https://mastt-news-feed-server.azurewebsites.net/get${a}Holiday`
     );
     const resJSON = await apiRes.json();
     setHoliday({
@@ -21,7 +21,9 @@ const HolidayLogic = ({ presetCountry }) => {
       holidayStartDate: resJSON.end_date,
     });
   };
-
+useEffect(() => {
+  getHoliday(presetCountry);
+}, [presetCountry]);
   
 
   return (
