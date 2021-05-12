@@ -40,7 +40,7 @@ function processNewsData(result){
 function fetchNewsFromThirdParty(){
     var newsUrls = [];
     for(var country in config.countryCodes){
-        newsUrls.push("https://newsapi.org/v2/top-headlines?country=" + config.countryCodes[country] + "&apiKey=" + config.tokens.newsapi)
+        newsUrls.push("https://newsapi.org/v2/top-headlines?country=" + config.countryCodes[country] + "category=general" + "&apiKey=" + config.tokens.newsapi)
     }
 
     Promise.all(
@@ -55,12 +55,14 @@ function fetchNewsFromThirdParty(){
 }
 
 function getNews(req,res){
-    const country = req.query.country;
-    const startDate = req.query.startDate;
-    const endDate = req.query.endDate;
+    
+    const currentDate = new Date();
+    var startDate = new Date(currentDate);
+    startDate.setDate(currentDate.getDate() - 2)
 
     res.header('Access-Control-Allow-Origin', '*');
-    const docquery = newsSchema.find({country: country});
+    // const docquery = newsSchema.find({country: country});
+    const docquery = newsSchema.find({start_date: {$gte: startDate.getTime()}})
     docquery.exec().then(news => {
       res.json(news);
     }).catch(err => {
