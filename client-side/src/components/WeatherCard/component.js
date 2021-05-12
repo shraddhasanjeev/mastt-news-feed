@@ -21,47 +21,58 @@ const WeatherCard = ({
     // hot weather
     highColor = (1 - (temp - 22) / 40) * 255;
     lowColor = highColor - 150;
-    bg = `linear-gradient(to top, rgb(255,${highColor},0), rgb(255,${Math.abs(
+    bg = `linear-gradient(to top, rgba(255,${highColor},0,0.6), rgba(255,${Math.abs(
       lowColor
-    )},0));`;
+    )},0,0.6));`;
   } else if (temp <= 22) {
     highColor = (1 - (temp + 22) / 40) * 255;
     lowColor = highColor - 200;
-    bg = `linear-gradient(to top, rgb(0,${highColor},255), rgb(0,${Math.abs(
+    bg = `linear-gradient(to top, rgb(0,${highColor},255,0.6), rgb(0,${Math.abs(
       lowColor
-    )},255));`;
+    )},255,0.6));`;
   }
 
   const Card = styled.div`
     @import url("https://fonts.googleapis.com/css2?family=Merriweather+Sans&display=swap");
+
     background: ${bg};
+
     font-size: 1.1rem;
     font-family: merriweather;
-    width: 200px;
-    height: 350px;
+    width: 400px;
+    height: 250px;
     display: grid;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 15px;
-    display: flex;
+    grid-template-columns: repeat(2, 50%);
+    grid-template-rows: repeat(4, 25%);
+    grid-column-gap: px;
+    grid-row-gap: 0px;
+    grid-auto-flow: column;
+    border-radius: 15px 15px 0px 0px;
     color: white;
   `;
 
   return (
     <motion.div
-      initial={{ scale: 0 }}
-      animate={{ scale: 1 }}
-      transition={{ duration: 0.5 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{delay:1}}
     >
       <Card>
         <Location getWeather={getWeather} city={city} country={country} />
-        <p>
-          TIME:
+        <p
+          style={{
+            fontSize: "2em",
+            display: "flex",
+            justifyContent: "center",
+            gridColumn: "1/span 1",
+            gridRow: "3/span 1",
+          }}
+        >
           <Clock format={"HH:mm:ss"} ticking={true} timezone={timezone} />
         </p>
-        <Icon condition={condition} />
+
         <Condition temp={temp} condition={condition} />
+        <Icon condition={condition} />
       </Card>
     </motion.div>
   );

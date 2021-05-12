@@ -8,14 +8,14 @@ const HolidayNote = ({ country, holidayName, holidayStartDate, holidayEndDate })
   
 
   const Note = styled.div`
-    background: blue;
-    width: 200px;
-    height: 100px;
+    background:white;
+    width: 400px;
+    height: 120px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    border-radius: 40px;
+    border-radius: 0px 0px 15px 15px;
   `;
 
 
@@ -25,12 +25,13 @@ const HolidayNote = ({ country, holidayName, holidayStartDate, holidayEndDate })
       animate={{ scale: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <Note>Up next in {country}:<br/>
-        {holidayName} starting from {holidayStartDate} ending in {holidayEndDate}
-       
+      <Note>
+        <h1>Up next in</h1> {country}
+        {holidayName} starting from {holidayStartDate} ending in{holidayEndDate}
+        {holidayEndDate}
       </Note>
     </motion.div>
   );
 };
-
+ 
 export default HolidayNote;

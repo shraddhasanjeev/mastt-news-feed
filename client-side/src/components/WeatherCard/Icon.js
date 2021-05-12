@@ -3,7 +3,12 @@ import styled from '@emotion/styled'
 
 const  Icon=(props) => {
     const Icon = styled.img`
-    width: 40%; 
+    width: 80%;
+    grid-column:2;
+    grid-row:1/span 2;
+    display:flex;
+    justify-content:center;
+    
     `
 
     var icon = ''
