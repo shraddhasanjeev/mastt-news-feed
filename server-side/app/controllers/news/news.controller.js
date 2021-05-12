@@ -59,7 +59,7 @@ function getNews(req,res){
     const startDate = req.query.startDate;
     const endDate = req.query.endDate;
 
-    console.log(country)
+    res.header('Access-Control-Allow-Origin', '*');
     const docquery = newsSchema.find({country: country});
     docquery.exec().then(news => {
       res.json(news);
