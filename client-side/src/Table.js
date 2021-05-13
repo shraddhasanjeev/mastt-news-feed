@@ -2,42 +2,37 @@ import React from 'react';
 import axios from "axios"
 import "./table.css"
 
-const rows = [];
-const acountry = "Australia";
+const rows = [];  
 var num = -1;
 var history = new Array();
-//router.get('/holiday', mainController.getAllHolidays)
-//router.get('/weather', mainController.getAllWeather)
 
-class Holiday extends React.Component {
+class Table extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             msg:false
         }
     }
-    
 
     componentWillMount() {
         axios({
-          method: "GET",
-          url:
-            "https://mastt-news-feed-server.azurewebsites.net/getAustraliaHoliday",
+            method: "GET",
+            url: 'http://localhost:3000/holiday/',
         })
-          .then((response) => {
-            num = response.data.length;
-            for (let y = 0; y < num; y += 1) {
-              history[y] = response.data[y];
-            }
+            .then((response) => {
+                num = response.data.length;
+                for (let y = 0; y < num; y += 1) {
+                    history[y] = response.data[y];
+                }
 
-            this.setState({
-              msg: true,
+                this.setState({
+                    msg: true
+                });
+                console.log("Finished")
+            })
+            .catch(function (error) {
+                console.log("Error");
             });
-            console.log("Finished");
-          })
-          .catch(function (error) {
-            console.log("Error");
-          });
     }
 
     render() {
@@ -45,12 +40,14 @@ class Holiday extends React.Component {
             for (let y = 0; y < num; y += 1) {
                 rows.push(
                     <tr>
+                        <th>{history[y].id}</th>
                         <th>{history[y].city}</th>
                         <th>{history[y].title}</th>
+                        <th>{history[y].image}</th>
                         <th>{history[y].start_date}</th>
                         <th>{history[y].end_date}</th>
                         <th>{history[y].category}</th>
-                        <th>{history[y].content}</th>
+                        <th>{history[y].summary}</th>
                     </tr>
                 )
             }
@@ -58,12 +55,14 @@ class Holiday extends React.Component {
                 <div id="history">
                     <table>
                         <tr>
+                            <td>id</td>
                             <td>city</td>
                             <td>title</td>
+                            <td>image</td>
                             <td>start_date</td>
                             <td>end_date</td>
                             <td>category</td>
-                            <td>content</td>
+                            <td>summary</td>
                         </tr>
                         {rows}
                     </table>
@@ -75,4 +74,4 @@ class Holiday extends React.Component {
         
     }
 
-} export default Holiday;
+} export default Table;

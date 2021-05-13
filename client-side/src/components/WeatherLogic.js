@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import WeatherCard from './WeatherCard/component';
 import PulseLoader from 'react-spinners/PulseLoader'
 
-const WeatherLogic = ({ defaultLocation }) => {
+const WeatherLogic = ({ defaultLocation, timezone }) => {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
@@ -66,7 +66,8 @@ const WeatherLogic = ({ defaultLocation }) => {
                     condition={weather.condition}
                     city={weather.city}
                     country={weather.country}
-                    getWeather={getWeather}
+                getWeather={getWeather}
+                timezone={timezone}
                 />
 
                     
