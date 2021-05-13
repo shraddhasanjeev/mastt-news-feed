@@ -7,11 +7,10 @@ const Condition = ({ temp, condition }) => {
     
     return (
       <>
-        <div style={{ fontSize: "1.8em",gridColumn:"2/span 1",
-      gridRow: "4/span 1", }}>
-          <Reel theme={reelStyle} text={`${temp}°C`} duration={3000}/>
-          <State>{condition}</State>
+        <div style={{ fontSize: "2em" }}>
+          <Reel theme={reelStyle} text={`${temp}°C`} />
         </div>
+        <State>{condition}</State>
       </>
     );
 }
@@ -22,33 +21,27 @@ export default Condition;
 
     const State = styled.h3`
       font-family: "Merriweather", sans-serif;
-        height: 0.1em;
-         display: flex;
-         align-items: flex-end;
-         justify-content: center;
-      
+      font-size: 1.2rem;
     `;
 
      const reelStyle = {
        reel: {
-         
-         height: "0.8em",
-         fontSize:"35px",
+         lineHeight: "0.97em",
+         height: "1.07em",
          display: "flex",
          alignItems: "flex-end",
          overflowY: "hidden",
          justifyContent: "center",
        },
        group: {
+         height: "1.5em",
          transitionDelay: "1",
          transitionTimingFunction: "ease-in-out",
          transform: "translate(0, 0)",
-         
        },
 
        number: {
          height: "1em",
          fontFamily: "Merriweather",
-         
        },
      };

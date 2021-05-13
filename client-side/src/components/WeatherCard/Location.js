@@ -93,12 +93,13 @@ const CloseButton = styled.span`
 `;
     const City = styled.h1`
       font-family: "Merriweather", sans-serif;
-      font-size: 2.2em;
-      allign-items: baseline;
+      font-size: 1.8em;
+      position: relative;
       cursor: pointer;
       &: hover {
-        top: -5px;
+          top: -5px;
       }
+      
     `;
     const Country = styled.h3`
       font-family: "Merriweather", sans-serif;

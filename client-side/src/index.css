@@ -1,82 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans&display=swap');
 *{
+  margin: 0;
+  padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
 }
 
-
-.note{
-    justify-content: flex-start;
-    display: flex;
-  
-
-}
-body{
-background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
-} 
-
-header{
-  background:#4950613a;
-  padding: 10px;
-  color:white;
-  font-size: 30px;
-  font-family: 'Quicksand', sans-serif;
-}
-
-header h1{
-  color:white;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-
-#infoHub{
-display: grid;
-grid-template-columns: 1fr 1fr 1fr 1fr;
-grid-auto-rows: minmax(150px, auto);
-margin:0 auto;
-
-
-}
-
-
-
- .nested{
-   display:grid;
-   grid-template-columns: 1fr 1fr 1fr 1fr;
-   allign-items:center;
-   grid-column: 1/5;
-   
- } 
-
- .card content{
-z-index:0;
- }
-
- .card{
-
-z-index: -1;
-width: 400px;
-height: 250px;
-          
- }
-
-
-.article{
-  display: grid;
-  grid-template-columns: 25% 75%;
-  grid-template-rows: 25% 65%;
-  grid-auto-flow: row;
-  height:400px;
-  width: 100%;
-  border-spacing: 0.2em;
-}
-
-
-h2 {
-  font-family: 'Quicksand', sans-serif;
-}

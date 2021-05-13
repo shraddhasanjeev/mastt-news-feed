@@ -1,14 +1,14 @@
 {
   "ExpandedNodes": [
     "",
-    "\\controllers",
-    "\\controllers\\holiday",
-    "\\controllers\\holiday\\holidayData",
-    "\\controllers\\holiday\\scripts",
-    "\\controllers\\main",
-    "\\models",
+    "\\app",
+    "\\app\\controllers",
+    "\\app\\controllers\\holiday",
+    "\\app\\controllers\\main",
+    "\\app\\controllers\\weather",
+    "\\app\\models",
     "\\routes"
   ],
-  "SelectedNode": "\\controllers\\holiday\\holidayController.js",
+  "SelectedNode": "\\app\\controllers\\main\\serverService.js",
   "PreviewInSolutionExplorer": false
 }

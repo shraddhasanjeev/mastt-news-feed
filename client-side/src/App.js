@@ -1,5 +1,4 @@
 import Main from './Main'
-import Table from './Table'
 import News from './News'
 import Holiday from './Holiday'
 import {
