@@ -29,17 +29,16 @@ class Main extends React.Component {
                             }}
                         >
                             <WeatherLogic
-                                defaultLocation="Buenos Aires,AR"
-                                timezone="America/Argentina/Buenos_Aires"
+                                defaultLocation="Sydney, AU"
+                                timezone="Australia/Sydney"
                             />
                         </div>
                         <div className="note">
                             <HolidayLogic presetCountry="Australia" />
                         </div>
                     </div>
-
                     <div className="label">
-                        <div
+                        < div
                             className="card"
                             style={{
                                 backgroundImage: "url(" + "./buenosaires.jpg" + ")",
@@ -100,7 +99,7 @@ class Main extends React.Component {
                         </div>
                     </div>
 
-                    
+
                 </div>
                 <div className="newsHub">
                     <News />
