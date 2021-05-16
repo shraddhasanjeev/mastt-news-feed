@@ -40,7 +40,7 @@ function processNewsData(result){
 function fetchNewsFromThirdParty(){
     var newsUrls = [];
     for(var country in config.countryCodes){
-        newsUrls.push("https://newsapi.org/v2/top-headlines?country=" + config.countryCodes[country] + "category=general" + "&apiKey=" + config.tokens.newsapi)
+        newsUrls.push("https://newsapi.org/v2/top-headlines?country=" + config.countryCodes[country] + "&category=general" + "&apiKey=" + config.tokens.newsapi)
     }
 
     Promise.all(
