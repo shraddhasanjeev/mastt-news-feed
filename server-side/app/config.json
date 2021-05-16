@@ -32,7 +32,7 @@
         "Phillippines": "ph" 
     },
     "intervals":{
-        "news": 43200000,
-        "weather": 43200000
+        "news": 10000,
+        "weather": 10000
     }
 }

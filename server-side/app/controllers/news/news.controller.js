@@ -12,8 +12,16 @@ function getParameterByName(name, url) {
 }
 
 function processNewsData(result){
+    var spawn = require('child_process').spawn;
     var errors = []
-    var res = result.data 
+    var res = result.data
+    var filteredNews = []
+    var filterNewsData = spawn('python', ['./app/scripts/filterNews.py', result.data]);
+    filterNewsData.stdout.on('data', function(data) {
+        console.log(data);
+        filteredNews.push(data);
+    })
+    console.log(filteredNews);
     const countryCode = getParameterByName("country",result.url)
     for(let i=0; i< res.totalResults; i++){
         if(res.articles[i] != undefined){
