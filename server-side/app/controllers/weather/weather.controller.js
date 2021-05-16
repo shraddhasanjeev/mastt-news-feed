@@ -58,7 +58,7 @@ module.exports.getWeatherByCity = function(req,res){
     const startDate = req.query.startDate;
     const endDate = req.query.endDate;
 
-    console.log(city)
+    res.header('Access-Control-Allow-Origin', '*');
     const docquery = weatherSchema.find({city: city});
     docquery.exec().then(weather => {
       res.json(weather);
