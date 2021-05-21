@@ -13,8 +13,7 @@ const WeatherLogic = ({ defaultLocation, timezone }) => {
         condition: null,
         country: null,
     });
-    
-    
+
     const getWeather = async (q) => {
         
         setLoading(true);
