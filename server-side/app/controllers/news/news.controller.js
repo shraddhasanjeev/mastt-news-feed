@@ -28,7 +28,8 @@ function processNewsData(result){
                 content: res.articles[i]["content"], 
                 start_date: start_date,
                 end_date: end_date,
-                country: countryCode
+                country: countryCode,
+                archived: false
             })
             newsItem.save().catch(err => {
                 errors.push(err)
@@ -64,6 +65,7 @@ function getNews(req,res){
         res.header('Access-Control-Allow-Origin', '*');
         // const docquery = newsSchema.find({country: country});
         const docquery = newsSchema.find({ start_date: { $gte: startDate.getTime() } })
+            .where('archived').equals(false)
         docquery.exec().then(news => {
             res.json(news);
         }).catch(err => {

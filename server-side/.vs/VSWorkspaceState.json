@@ -8,8 +8,9 @@
     "\\app\\controllers\\main",
     "\\app\\controllers\\news",
     "\\app\\controllers\\weather",
+    "\\app\\models",
     "\\routes"
   ],
-  "SelectedNode": "\\routes\\routes.js",
+  "SelectedNode": "\\app.js",
   "PreviewInSolutionExplorer": false
 }

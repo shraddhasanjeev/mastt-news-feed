@@ -23,6 +23,10 @@ const newsApiSchema = mongoose.Schema({
     content: {
         type: String,
         required: true
+    },
+    archived: {
+        type: Boolean,
+        required: true
     }
 }, options);
 
