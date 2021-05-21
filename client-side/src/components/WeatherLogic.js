@@ -20,15 +20,16 @@ const WeatherLogic = ({ defaultLocation, timezone }) => {
         setLoading(true);
         try {
             const apiRes = await fetch(
-                `http://api.openweathermap.org/data/2.5/weather?q=${q}&units=metric&APPID=ba21ad3c5ee233cb6ed93a261f758fc5`
+              `http://api.openweathermap.org/data/2.5/weather?q=${q}&units=metric&APPID=ba21ad3c5ee233cb6ed93a261f758fc5`
             );
             const resJSON = await apiRes.json();
-            setWeather({
+            console.log(resJSON);
+              setWeather({
                 temp: resJSON.main.temp,
                 city: resJSON.name,
                 condition: resJSON.weather[0].main,
                 country: resJSON.country,
-            });
+              });
         } catch (error) {
             setError(true);
         }
@@ -45,8 +46,7 @@ const WeatherLogic = ({ defaultLocation, timezone }) => {
     if (error) {
         return (
             <div>
-                An error has occured
-                <button onClick={() => setError(false)}>RESET!</button>
+                An error has occured, please refresh the page or try again later.
             </div>
         );
     }

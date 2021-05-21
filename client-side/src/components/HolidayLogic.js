@@ -11,10 +11,15 @@ const HolidayLogic = ({ presetCountry }) => {
   const [error, setError] = useState(false);
 
   const getHoliday = async (a) => {
+    const settings = {
+      headers: {
+        Authorization: `Bearer f39236376746483bb4f7922954f2f503`,
+      }
+    }
     setLoading(true);
     try {
       const apiRes = await fetch(
-        `https://mastt-news-feed-server.azurewebsites.net/get${a}Holiday`
+        `https://mastt-news-feed-server.azurewebsites.net/get${a}Holiday` , settings
       );
       const resJSON = await apiRes.json();
       console.log(resJSON)

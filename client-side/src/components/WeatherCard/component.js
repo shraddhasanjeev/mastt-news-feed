@@ -33,7 +33,6 @@ const WeatherCard = ({
   }
 
   const Card = styled.div`
-    @import url("https://fonts.googleapis.com/css2?family=Merriweather+Sans&display=swap");
 
     background: ${bg};
 

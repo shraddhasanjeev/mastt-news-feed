@@ -48,7 +48,7 @@ margin:0 auto;
  .nested{
    display:grid;
    grid-template-columns: 1fr 1fr 1fr 1fr;
-   allign-items:center;
+   align-items:center;
    grid-column: 1/5;
    
  } 
