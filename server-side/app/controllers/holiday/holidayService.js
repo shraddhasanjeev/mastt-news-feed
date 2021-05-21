@@ -1,5 +1,3 @@
-const { MessageQueue } = require("./MessageQueue");
-var messageQueue = new MessageQueue();
 var holidaySchema = require("../../models/holidaySchema");
 
 var thisYear = new Date().getFullYear()
@@ -10,13 +8,12 @@ async function update() {
     if (r1 == "Valid") {
     } else if (r1 == "Updated") {
         await updateData()
-        await extractInfo()
     } else {
         throw new Error("Failed to fetch last update date")
     }
     
 }
-
+updateData()
 function checkForUpdate() {
     return new Promise(function (resolve, reject) {
         thisYear = new Date().getFullYear()
@@ -37,27 +34,8 @@ function updateData() {
         var fs = require('fs')
         const spawn = require('child_process').spawn;
         const ls = spawn('python', ['./app/controllers/holiday/scripts/holidayFetch.py', 'arg1', 'arg2']);
-
         ls.stdout.on('data', (data) => {
             fs.writeFileSync('./app/controllers/holiday/scripts/lastFetch.dat', thisYear.toString())
-            resolve("Updated")
-        });
-
-        ls.stderr.on('data', (data) => {
-            reject("Failed to download data" + `${data}`);
-        });
-
-        ls.on('close', (code) => {
-        });
-    })
-}
-
-function extractInfo() {
-    return new Promise(function (resolve, reject) {
-        const spawn = require('child_process').spawn;
-        const ls = spawn('python', ['./app/controllers/holiday/scripts/htmlParser.py', 'arg1', 'arg2']);
-
-        ls.stdout.on('data', (data) => {
             retrunedData = `${data}`
 
             var arr = (retrunedData.substring(
@@ -129,11 +107,11 @@ function extractInfo() {
             } catch (err) {
 
             }
-            
+
         });
 
         ls.stderr.on('data', (data) => {
-            reject("Failed to extract data" + ` ${data}`);
+            reject("Failed to download data" + `${data}`);
         });
 
         ls.on('close', (code) => {
