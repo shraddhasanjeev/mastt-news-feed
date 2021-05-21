@@ -4,6 +4,7 @@ const util = require('util')
 var weatherSchema = require("../../models/weatherSchema");
 var errors = [];
 const epochThreeMinutes = 180000;
+const validateToken = require('../security')
 
 module.exports.fetchWeatherFromThirdParty = function(){
 
@@ -53,16 +54,18 @@ module.exports.fetchWeatherFromThirdParty = function(){
     }
 }
 
-module.exports.getWeatherByCity = function(req,res){
-    const city = req.query.city;
-    const startDate = req.query.startDate;
-    const endDate = req.query.endDate;
+module.exports.getWeatherByCity = function (req, res) {
+    if (validateToken(req.query.token)) {
+        const city = req.query.city;
+        const startDate = req.query.startDate;
+        const endDate = req.query.endDate;
 
-    res.header('Access-Control-Allow-Origin', '*');
-    const docquery = weatherSchema.find({city: city});
-    docquery.exec().then(weather => {
-      res.json(weather);
-    }).catch(err => {
-      res.status(500).send(err);
-    });
+        res.header('Access-Control-Allow-Origin', '*');
+        const docquery = weatherSchema.find({ city: city });
+        docquery.exec().then(weather => {
+            res.json(weather);
+        }).catch(err => {
+            res.status(500).send(err);
+        });
+    }
 }

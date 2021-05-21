@@ -1,6 +1,7 @@
 const fetch = require("node-fetch");
 const config = require("../../config.json");
 var newsSchema = require("../../models/newsSchema");
+const validateToken = require('../security')
 
 function getParameterByName(name, url) {
     name = name.replace(/[\[\]]/g, '\\$&');
@@ -55,19 +56,20 @@ function fetchNewsFromThirdParty(){
 }
 
 function getNews(req,res){
-    
-    const currentDate = new Date();
-    var startDate = new Date(currentDate);
-    startDate.setDate(currentDate.getDate() - 2)
+    if (validateToken(req.query.token)) {
+        const currentDate = new Date();
+        var startDate = new Date(currentDate);
+        startDate.setDate(currentDate.getDate() - 2)
 
-    res.header('Access-Control-Allow-Origin', '*');
-    // const docquery = newsSchema.find({country: country});
-    const docquery = newsSchema.find({start_date: {$gte: startDate.getTime()}})
-    docquery.exec().then(news => {
-      res.json(news);
-    }).catch(err => {
-      res.status(500).send(err);
-    });
+        res.header('Access-Control-Allow-Origin', '*');
+        // const docquery = newsSchema.find({country: country});
+        const docquery = newsSchema.find({ start_date: { $gte: startDate.getTime() } })
+        docquery.exec().then(news => {
+            res.json(news);
+        }).catch(err => {
+            res.status(500).send(err);
+        });
+    }
 }
 
 module.exports = {fetchNewsFromThirdParty, getNews};
