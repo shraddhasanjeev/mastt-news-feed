@@ -7,7 +7,7 @@ var num = -1;
 var history = new Array();
 //router.get('/holiday', mainController.getAllHolidays)
 //router.get('/weather', mainController.getAllWeather)
-this.dislikeHandler = this.dislikeHandler.bind(this);
+
 class News extends React.Component {
     constructor(props) {
         super(props);

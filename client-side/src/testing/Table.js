@@ -5,10 +5,8 @@ import "./table.css"
 const rows = [];  
 var num = -1;
 var history = new Array();
-//router.get('/holiday', mainController.getAllHolidays)
-//router.get('/weather', mainController.getAllWeather)
-this.dislikeHandler = this.dislikeHandler.bind(this);
-class News extends React.Component {
+
+class Table extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,7 +17,7 @@ class News extends React.Component {
     componentWillMount() {
         axios({
             method: "GET",
-            url: 'http://localhost:3000/news/',
+            url: 'http://localhost:3000/holiday/',
         })
             .then((response) => {
                 num = response.data.length;
@@ -42,12 +40,14 @@ class News extends React.Component {
             for (let y = 0; y < num; y += 1) {
                 rows.push(
                     <tr>
+                        <th>{history[y].id}</th>
+                        <th>{history[y].city}</th>
                         <th>{history[y].title}</th>
                         <th>{history[y].image}</th>
                         <th>{history[y].start_date}</th>
                         <th>{history[y].end_date}</th>
                         <th>{history[y].category}</th>
-                        <th>{history[y].content}</th>
+                        <th>{history[y].summary}</th>
                     </tr>
                 )
             }
@@ -55,12 +55,14 @@ class News extends React.Component {
                 <div id="history">
                     <table>
                         <tr>
+                            <td>id</td>
+                            <td>city</td>
                             <td>title</td>
                             <td>image</td>
                             <td>start_date</td>
                             <td>end_date</td>
                             <td>category</td>
-                            <td>content</td>
+                            <td>summary</td>
                         </tr>
                         {rows}
                     </table>
@@ -72,4 +74,4 @@ class News extends React.Component {
         
     }
 
-} export default News;
+} export default Table;

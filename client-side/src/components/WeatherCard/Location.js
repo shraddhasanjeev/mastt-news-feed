@@ -24,7 +24,7 @@ export default Location;
 
     const City = styled.h1`
       font-family: "Merriweather", sans-serif;
-      font-size: 2.2em;
+      font-size: 2.5em;
       allign-items: baseline;
       cursor: pointer;
       &: hover {

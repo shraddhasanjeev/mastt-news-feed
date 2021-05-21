@@ -1,28 +1,28 @@
 import urllib.request
 import json
 import time
- 
-def getHtml(url):
-    html = urllib.request.urlopen(url).read()
-    return html
- 
-def saveHtml(file_name, file_content):
-    # 注意windows文件命名的禁用符，比如 /
-    with open('./app/controllers/holiday/holidayData/' + file_name.replace('/', '_') + ".html", "wb") as f:
-        # 写文件用bytes而不是str，所以要转码
-        f.write(file_content)
+from bs4 import BeautifulSoup
 
+list = []
 with open('./app/controllers/holiday/scripts/address.json', 'r', encoding='utf8') as f:
     json_data = json.load(f)
     for record in json_data:
         url = record['link']
-        html = getHtml(url)
-        saveHtml(record['country'], html)
+        country = record['country'].replace('\'', '')
+        file = urllib.request.urlopen(url).read()
+        soup = BeautifulSoup(file, features="html.parser")
+
+        tr_arr = soup.table.find_all("tr")
+        for tr in tr_arr:
+            td_arr = tr.find_all("td")
+            if(len(td_arr) != 0):
+                des = ''
+                if td_arr[4].string is None:
+                    des = td_arr[3].string
+                else:
+                    des = td_arr[3].string +" " + td_arr[4].string
+                    data = (country,td_arr[2].string.replace('\'', '').replace(',', ''),td_arr[1].string.replace('\'', '').replace(',', ''),des.replace('\'', '').replace(',', ''))
+                    list.append(data)
         time.sleep(5)
  
-print ("complete")
-#aurl = "https://www.officeholidays.com/countries/australia"
-#html = getHtml(aurl)
-#saveHtml("sduview", html)
- 
-#print("下载成功")
+print(list)

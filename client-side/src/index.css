@@ -1,82 +1,115 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans&display=swap');
-*{
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  
-}
 
-
-.note{
-    justify-content: flex-start;
-    display: flex;
-  
-
-}
-body{
-background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
-} 
-
-header{
-  background:#4950613a;
-  padding: 10px;
-  color:white;
-  font-size: 30px;
-  font-family: 'Quicksand', sans-serif;
-}
-
-header h1{
-  color:white;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-
-#infoHub{
-display: grid;
-grid-template-columns: 1fr 1fr 1fr 1fr;
-grid-auto-rows: minmax(150px, auto);
-margin:0 auto;
-
-
+* {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 
 
- .nested{
-   display:grid;
-   grid-template-columns: 1fr 1fr 1fr 1fr;
-   align-items:center;
-   grid-column: 1/5;
+body {
+    background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
+    margin: 0px;
+    padding: 0px
+}
+
+
+header {
+    background: #4950613a;
+    padding: 10px;
+    color: white;
+    font-size: 30px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+    header h1 {
+        color: white;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+
+#infoHub {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-auto-rows: minmax(360px, auto);
+    margin: 10px;
+}
+
+.label {
+    width: 100%; /* ������grid���п� */
+    height: 100%;
+    margin: auto;
+}
+
+.card {
+    z-index: -1;
+    width: 96%;
+    height: 80%;
+    margin: auto;
+    clear: both;
+    position: relative;
+}
+
+.note {
+    width: 96%;
+    height: 20%; /* ע��ͬʱ�޸�HolidayNote�ĸ߶� */
+    font-size: 13px;
+    text-align: center;
+    margin-top: -12px;
+    margin-left: auto;
+    margin-right: auto;
+    clear: both;
+    position: relative;
+    background: white;
+    border-radius: 0px 0px 15px 15px;
+}
+
+
+
+.card content {
+    z-index: 0;
+}
+
+/*  News  */
+
+.newsHub {
+    margin: 10px;
+}
+
+
+.article {
+    display: grid;
+    grid-template-columns: 25% 75%;
+    grid-template-rows: 25% 60% 20%;
    
- } 
-
- .card content{
-z-index:0;
- }
-
- .card{
-
-z-index: -1;
-width: 400px;
-height: 250px;
-          
- }
-
-
-.article{
-  display: grid;
-  grid-template-columns: 25% 75%;
-  grid-template-rows: 25% 65%;
-  grid-auto-flow: row;
-  height:400px;
-  width: 100%;
-  border-spacing: 0.2em;
+    margin: 10px;
+    height: 200px;
+    width: 98%;
+    background-color: rgba(207, 228, 209, 0.363);
+    border-radius: 10px 10px 10px 10px;
 }
 
+    .article img {
+        display: block;
+        height: 100%;
+        width: 90%;
+        margin:auto;
+        padding:10px;
+        object-fit: cover;
+        grid-column: 1/ span 1;
+        grid-row: 1/span 2;
+    }
 
-h2 {
-  font-family: 'Quicksand', sans-serif;
-}
+    .article h2 {
+        font-family: 'Quicksand', sans-serif;
+        grid-column: 2;
+        grid-row: 1/span 1;
+    }
+.article p {
+        font-family: 'Quicksand', sans-serif;
+        grid-column: 2;
+        grid-row: 2;
+    }
+

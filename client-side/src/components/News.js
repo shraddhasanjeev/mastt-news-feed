@@ -1,58 +1,109 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import SkeletonArticle from "./skeletons/SkeletonArticle";
+import axios from "axios"
 import "../index.css";
+import { motion } from "framer-motion";
 
-const News = () => {
-  const [articles, setArticles] = useState(null);
-  const [error, setError] = useState(false);
-  try {
-    useEffect(() => {
-      setTimeout(async () => {
-        const res = await fetch(
-          "https://mastt-news-feed-server.azurewebsites.net/getNews"
-        );
-        const data = await res.json();
-        console.log(data);
-        setArticles(data);
-      }, 2000)
-    }, [])
-  }
-  catch (error) {
-    setError(true);
-  }
-  if (error) {
-    return (
-      <div>Error has occured</div>
-    )
+class News extends React.Component {
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      articles: null,
+      error: false,
+      disliked: false,
+    };
+    this.handleClick = this.handleClick.bind(this);
   }
   
-  if (!error) {
-    return (
-      <div className="articles">
-        <header>News Feed</header>
-
-        {articles &&
-          articles.map((article) => (
-            <div className="article" key={article.id}>
-              <img src={article.image} style={{
-                display: "block",
-  height: "100%",
-  width: "100%",
-  objectFit: "cover",
-  gridColumn: "1/ span 1",
-  gridRow: "1/span 2",
-              }}/>
-              <h2>{article.title}</h2>
-              <p>{article.content}</p>
-            </div>
-          ))}
-
-        {!articles && [1, 2, 3, 4, 5].map((n) => <SkeletonArticle key={n} />)}
-      </div>
-    );
+  handleClick() {
+    this.setState((state) => ({
+      disliked: !state.disliked,
+    }));
   }
-}
 
+  
+  
 
+  componentWillMount() {
+    axios({
+      method: "GET",
+      url: "https://mastt-news-feed-server.azurewebsites.net/getNews",
+    })
+      .then((res) => {
+        this.setState({ articles: res.data });
+        console.log(this.articles);
+      })
+      .catch((error) => {
+        this.setState({ error: true });
+      });
+  }
 
-export default News;
+  componentDidMount() {
+    setInterval(() => {
+      axios({
+        method: "GET",
+        url: "https://mastt-news-feed-server.azurewebsites.net/getNews",
+      })
+        .then((res) => {
+          this.setState({ articles: res.data });
+          console.log("News Updated");
+        })
+        .catch((error) => {
+          this.setState({ error: true });
+        });
+    }, 120 * 1000);
+  }
+
+  render() {
+    if (this.state.error) {
+      return <div>Error has occured</div>;
+    }
+
+    if (!this.state.error) {
+      return (
+        <div className="articles">
+          <header>News Feed</header>
+
+          {this.state.articles &&
+            this.state.articles.map((article) => (
+              <div className="article" key={article.id}>
+                <img src={article.image} />
+                <h2>
+                  {article.title}
+                  {article.country}
+                </h2>
+
+                <p
+                  onClick={() =>
+                    window.open(`${article.sourceUrl}`)
+                  }
+                >
+                  {article.content}
+                </p>
+                <motion.div
+                  style={{
+                    gridColumn: "2",
+                    gridRow: "3",
+                    fontFamily: '"Quicksand", sans-serif',
+                  }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{
+                    scale: 1.05,
+                    borderRadius: "100%",
+                  }}
+                >
+                  <button onClick={this.handleClick}>
+                    {this.state.disliked ? "This is not relevent" : "Flagged"}
+                  </button>
+                </motion.div>
+              </div>
+            ))}
+
+          {!this.state.articles &&
+            [1, 2, 3, 4, 5].map((n) => <SkeletonArticle key={n} />)}
+        </div>
+      );
+    }
+  }
+} export default News;

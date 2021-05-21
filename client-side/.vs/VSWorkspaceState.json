@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\components"
+    "\\src\\components",
+    "\\src\\components\\WeatherCard"
   ],
-  "SelectedNode": "\\src\\News.js",
+  "SelectedNode": "\\src\\components\\HolidayNote.js",
   "PreviewInSolutionExplorer": false
 }
