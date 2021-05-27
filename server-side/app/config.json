@@ -34,6 +34,6 @@
   "intervals": {
     "holiday": 86400000,
     "news": 43200000,
-    "weather": 43200000
+    "weather": 240000
   }
 }

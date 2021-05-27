@@ -11,7 +11,7 @@ module.exports.fetchWeatherFromThirdParty = function(){
     config.locationCoordinates.forEach(city => {
 
         var weather = new weatherSchema();
-        var url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + city.latitude + "&lon=" + city.longitude + "&exclude=minutely,hourly,daily&appid=" + config.tokens.openweatherapi;
+        var url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + city.latitude + "&lon=" + city.longitude + "&exclude=minutely,hourly,daily&units=metric&appid=" + config.tokens.openweatherapi;
         
         weather.city = city.cityName;
         request(url, function (error, response, body) {
