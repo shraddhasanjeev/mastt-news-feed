@@ -3,7 +3,6 @@ const config = require('../../config.json');
 const util = require('util')
 var weatherSchema = require("../../models/weatherSchema");
 var errors = [];
-const epochThreeMinutes = 180000;
 const validateToken = require('../security')
 
 module.exports.fetchWeatherFromThirdParty = function(){
@@ -24,7 +23,7 @@ module.exports.fetchWeatherFromThirdParty = function(){
                     if (epochDate < 10000000000)
                         epochDate *= 1000;
                     weather.start_date = epochDate;
-                    weather.end_date = epochDate + epochThreeMinutes;
+                    weather.end_date = epochDate + config.intervals.weather;
                     weather.temperature = result.current.temp;
                     weather.outlook = result.current.weather[0].main;
                 }
@@ -57,11 +56,10 @@ module.exports.fetchWeatherFromThirdParty = function(){
 module.exports.getWeatherByCity = function (req, res) {
     if (validateToken(req.query.token)) {
         const city = req.query.city;
-        const startDate = req.query.startDate;
-        const endDate = req.query.endDate;
 
         res.header('Access-Control-Allow-Origin', '*');
-        const docquery = weatherSchema.find({ city: city });
+        // const docquery = weatherSchema.find({ city: city });
+        const docquery = weatherSchema.find({ city: city }).sort({_id: -1}).limit(1);
         docquery.exec().then(weather => {
             res.json(weather);
         }).catch(err => {

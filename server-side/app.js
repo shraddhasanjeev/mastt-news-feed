@@ -16,8 +16,8 @@ app.use(express.static(__dirname + "/app/views"));
 const router = require('./routes/routes');
 app.use('/', router )
 
-app.listen(azurePort, function () {
-	console.log('News Feed app listening on port 3000!')
+app.listen(port, function () {
+	console.log('News Feed app listening on port!' + port)
 });
 
 module.exports = app;
