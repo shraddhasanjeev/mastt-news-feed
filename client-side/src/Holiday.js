@@ -21,10 +21,16 @@ class Holiday extends React.Component {
     componentWillMount() {
         axios({
           method: "GET",
+
           url:
-            "https://mastt-news-feed-server.azurewebsites.net/getAustraliaHoliday",
+                "https://mastt-news-feed-server.azurewebsites.net/getIndiaHoliday",
+            params: {
+                token: 'f39236376746483bb4f7922954f2f503'
+            }
+
         })
-          .then((response) => {
+            .then((response) => {
+              console.log(response)
             num = response.data.length;
             for (let y = 0; y < num; y += 1) {
               history[y] = response.data[y];

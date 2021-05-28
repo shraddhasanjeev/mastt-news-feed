@@ -1,4 +1,5 @@
 import Main from './Main'
+import Holiday from './Holiday'
 import {
     BrowserRouter as Router,
     Switch,
@@ -12,6 +13,7 @@ function App() {
         <Router>
             <Switch>
                 <Route exact path="/" component={Main} />
+                <Route exact path="/h" component={Holiday} />
             </Switch>
         </Router>
         )

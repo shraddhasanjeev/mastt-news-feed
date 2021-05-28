@@ -13,5 +13,6 @@ router.get('/getWeatherByCity', weatherController.getWeatherByCity);
 
 /* News API */
 router.get('/getNews', newsController.getNews)
+router.get('/archiveNews', newsController.archiveNews)
 
 module.exports = router;

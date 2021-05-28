@@ -17,7 +17,7 @@ function processNewsData(result){
     var res = result.data 
     const countryCode = getParameterByName("country",result.url)
     for(let i=0; i< res.totalResults; i++){
-        if(res.articles[i] != undefined){
+        if (res.articles[i] != undefined) {
             let start_date = new Date(res.articles[i]["publishedAt"])
             let end_date = new Date(start_date);
             end_date.setDate(start_date.getDate() + 1)
@@ -74,4 +74,14 @@ function getNews(req,res){
     }
 }
 
-module.exports = {fetchNewsFromThirdParty, getNews};
+function archiveNews(req, res) {
+    if (validateToken(req.query.token)) {
+        res.header('Access-Control-Allow-Origin', '*');
+        const id = req.query.id;
+        newsSchema.findByIdAndUpdate(id, { "archived": true }, (err, res) => {
+            console.log(res + " archived")
+        })
+    }
+}
+
+module.exports = { fetchNewsFromThirdParty, getNews, archiveNews};
