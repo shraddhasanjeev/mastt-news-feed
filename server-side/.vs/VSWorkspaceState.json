@@ -4,13 +4,12 @@
     "\\app",
     "\\app\\controllers",
     "\\app\\controllers\\holiday",
-    "\\app\\controllers\\holiday\\scripts",
     "\\app\\controllers\\main",
     "\\app\\controllers\\news",
     "\\app\\controllers\\weather",
     "\\app\\models",
     "\\routes"
   ],
-  "SelectedNode": "\\app.js",
+  "SelectedNode": "\\app\\controllers\\news\\news.controller.js",
   "PreviewInSolutionExplorer": false
 }

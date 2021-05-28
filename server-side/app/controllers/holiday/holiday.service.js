@@ -1,29 +1,36 @@
 var holidaySchema = require("../../models/holidaySchema");
+const request = require('request');
+const cheerio = require('cheerio');
+const config = require('../../config.json');
 
 var thisYear = new Date().getFullYear()
-duration = (60 * 60 * 1000) * 24 // 1 day
+update()
 
 async function update() {
     let r1 = await checkForUpdate()
     if (r1 == "Valid") {
+        console.log("Holiday API: up-to-date")
     } else if (r1 == "Updated") {
+        console.log("Holiday API: Updating data")
         await updateData()
     } else {
         throw new Error("Failed to fetch last update date")
     }
-    
+
 }
-updateData()
+
 function checkForUpdate() {
+    console.log("Holiday API: check for update")
     return new Promise(function (resolve, reject) {
         thisYear = new Date().getFullYear()
         var fs = require('fs')
-        const lastFetch = parseInt(fs.readFileSync('./app/controllers/holiday/scripts/lastFetch.dat'))
+        const lastFetch = parseInt(fs.readFileSync('./app/controllers/holiday/lastFetch.dat'))
 
 
         if (lastFetch == thisYear) {
             resolve("Valid")
         } else {
+            console.log("Holiday API: Updated")
             resolve("Updated")
         }
     })
@@ -31,24 +38,26 @@ function checkForUpdate() {
 
 function updateData() {
     return new Promise(function (resolve, reject) {
-        var fs = require('fs')
-        const spawn = require('child_process').spawn;
-        const ls = spawn('python', ['./app/controllers/holiday/scripts/holidayFetch.py', 'arg1', 'arg2']);
-        ls.stdout.on('data', (data) => {
-            fs.writeFileSync('./app/controllers/holiday/scripts/lastFetch.dat', thisYear.toString())
-            retrunedData = `${data}`
 
-            var arr = (retrunedData.substring(
-                retrunedData.indexOf('(') + 1,
-                retrunedData.lastIndexOf(')')
-            )).split('), (')
-            try {
-                for (var index = 0; index < arr.length; index++) {
-                    var temp = arr[index].split(",")
-                    var month = -1
-                    var day = 0
-                    if (temp[2].length == 9) {
-                        switch (temp[2].substring(2, 5)) {
+        config.countryHoliday.forEach(country => {
+            request(country.link, function (error, response, body) {
+                const $ = cheerio.load(body)
+
+                var t = $('html').find('td');
+                var t2 = t.nextAll();
+
+                var counter = 0;
+
+                var title;
+                var city = country.country;
+                var dateString1 = ""
+                var dateString2 = ""
+                var content = "";
+                t2.each(function (i, elem) {
+                    counter++;
+                    if (counter == 1) {
+                        var month
+                        switch ($(this).text().substring(0, 3)) {
                             case "Jan":
                                 month = 0
                                 break
@@ -86,36 +95,30 @@ function updateData() {
                                 month = 11
                                 break
                         }
-                        day = parseInt(temp[2].substring(6, 8))
+                        var day = parseInt($(this).text().substring(4, 6))
+                        if (month == -1) {
+                            dateString = "error"
+                        } else {
+                            dateString1 = new Date(thisYear, month, day).toDateString()
+                            dateString2 = new Date(thisYear, month, day + 1).toDateString()
+                        }
+                    } else if (counter == 2) {
+                        title = $(this).text();
+                    } else if (counter == 3) {
+                        content += $(this).text();
                     }
-
-                    var dateString1 = ""
-                    var dateString2 = ""
-                    if (month == -1) {
-                        dateString = "error"
-                    } else {
-                        dateString1 = new Date(thisYear, month, day).toDateString()
-                        dateString2 = new Date(thisYear, month, day + 1).toDateString()
+                    if (counter == 4) {
+                        content += (" " + $(this).text());
+                        counter = 0;
+                        saveToDb(title, city, content, dateString1, dateString2)
+                        content = ""
                     }
-                    var city = temp[0].replace(/^(\s|\')+|(\s|\')+$/g, '')
-                    var title = temp[1].replace(/\"/g, '').replace(/^(\s|\')+|(\s|\')+$/g, '')
-                    var content = temp[3].replace(/\"/g, '').replace("\\xa0", "").replace(/^(\s|\')+|(\s|\')+$/g, '')
-
-                    saveToDb(title, city, content, dateString1, dateString2)
-                    resolve("Updated")
-                }
-            } catch (err) {
-
-            }
-
-        });
-
-        ls.stderr.on('data', (data) => {
-            reject("Failed to download data" + `${data}`);
-        });
-
-        ls.on('close', (code) => {
-        });
+                });
+            })
+        })
+        var fs = require('fs')
+        fs.writeFileSync('./app/controllers/holiday/lastFetch.dat', thisYear.toString())
+        resolve("Updated")
     })
 }
 
@@ -134,14 +137,16 @@ function saveToDb(title, city, content, startDate, endDate) {
         });
 }
 
-module.exports.initialize = function () {
+module.exports.fetchHoliday = function () {
     update()
-
-    setInterval(function () {
-        update()
-    }, duration)
 }
 
-module.exports.getHolidays = function () {
-    return messageQueue.getQueue();
+var model = require('../../models/masterFeed');
+
+module.exports.getNextHoliday = async function (city) {
+    var data = await model.find({ "category": "holiday" })
+        .where('start_date').gt(new Date().getTime())
+        .where('city').equals(city)
+        .sort("start_date").limit(1)
+    return data
 }

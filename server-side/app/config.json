@@ -32,8 +32,26 @@
     "Phillippines": "ph"
   },
   "intervals": {
-    "holiday": 86400000,
+    "holiday": 43200000,
     "news": 43200000,
     "weather": 240000
-  }
+  },
+  "countryHoliday": [
+    {
+      "country": "Argentina",
+      "link": "https://www.officeholidays.com/countries/argentina"
+    },
+    {
+      "country": "Australia",
+      "link": "https://www.officeholidays.com/countries/australia"
+    },
+    {
+      "country": "India",
+      "link": "https://www.officeholidays.com/countries/india"
+    },
+    {
+      "country": "Phillippines",
+      "link": "https://www.officeholidays.com/countries/philippines"
+    }
+  ]
 }
