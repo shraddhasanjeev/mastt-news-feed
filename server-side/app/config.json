@@ -30,6 +30,9 @@
         "Australia": "au",
         "India": "in",
         "Phillippines": "ph" 
+    },    
+    "newsUrls":{
+        "sydneyDomains": ["news.com.au,heraldsun.com.au,news.com.au,theage.com.au,smh.com.au,news.google.com,abc.net.au,bbc.co.uk,reuters.com,cnn.com"]
     },
     "intervals":{
         "news": 10000,

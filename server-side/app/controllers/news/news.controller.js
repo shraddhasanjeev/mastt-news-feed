@@ -16,23 +16,24 @@ function processNewsData(result){
     var errors = []
     var res = result.data
     var filteredNews = []
-    var filterNewsData = spawn('python', ['./app/scripts/filterNews.py', result.data]);
-    filterNewsData.stdout.on('data', function(data) {
-        console.log(data);
-        filteredNews.push(data);
+    var filterNewsData = spawn('python', ['./app/scripts/filterNews.py', JSON.stringify(result.data)]);
+    filterNewsData.stdout.on('data', function(pythonData) {
+        console.log(JSON.stringify(pythonData.toString()));
+        // filteredNews.push(data);
     })
-    console.log(filteredNews);
     const countryCode = getParameterByName("country",result.url)
+    // const countryCode = getParameterByName("q",result.url)
     for(let i=0; i< res.totalResults; i++){
         if(res.articles[i] != undefined){
             let start_date = new Date(res.articles[i]["publishedAt"])
+            start_date.setHours(0,0,0,0);
             let end_date = new Date(start_date);
             end_date.setDate(start_date.getDate() + 1)
             var newsItem = new newsSchema({
                 title: res.articles[i]["title"] ,
                 sourceUrl: res.articles[i]["url"],
                 image: res.articles[i]["urlToImage"],
-                content: res.articles[i]["content"], 
+                content: res.articles[i]["description"], 
                 start_date: start_date,
                 end_date: end_date,
                 country: countryCode
@@ -42,11 +43,12 @@ function processNewsData(result){
             });
         }
     }
-    console.log("records saved for "+ countryCode)    
+    console.log(res.totalResults + " records saved for "+ countryCode)    
 }
 
 function fetchNewsFromThirdParty(){
     var newsUrls = [];
+    //var newsUrls = ["https://newsapi.org/v2/everything?q=sydney&sortBy=relevancy&from=2021-05-14&to=2021-05-19&domains="+ config.newsUrls.sydneyUrls + "&apiKey=" + config.tokens.newsapi];
     for(var country in config.countryCodes){
         newsUrls.push("https://newsapi.org/v2/top-headlines?country=" + config.countryCodes[country] + "&category=general" + "&apiKey=" + config.tokens.newsapi)
     }
@@ -63,10 +65,11 @@ function fetchNewsFromThirdParty(){
 }
 
 function getNews(req,res){
-    
+
     const currentDate = new Date();
     var startDate = new Date(currentDate);
     startDate.setDate(currentDate.getDate() - 2)
+    startDate.setHours(0,0,0,0);
 
     res.header('Access-Control-Allow-Origin', '*');
     // const docquery = newsSchema.find({country: country});
