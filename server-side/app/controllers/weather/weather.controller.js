@@ -16,8 +16,6 @@ module.exports.fetchWeatherFromThirdParty = function(){
         request(url, function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 var result = JSON.parse(body);
-                console.log("1");
-                console.log(result);
                 if(result.current){
                     var epochDate = parseInt(result.current.dt);
                     if (epochDate < 10000000000)
@@ -41,7 +39,6 @@ module.exports.fetchWeatherFromThirdParty = function(){
                 }
                 console.log(weather);
                 weather.save().catch(err => {
-                    console.log(err)
                     errors.push(err)
                 });
             }

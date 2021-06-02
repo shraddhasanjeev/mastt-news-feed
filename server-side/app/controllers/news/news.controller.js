@@ -31,10 +31,23 @@ function processNewsData(result){
                 country: countryCode,
                 archived: false
             })
-            newsItem.save().catch(err => {
-                errors.push(err)
+            newsItem.save(function(err, obj){
+                    if(err){
+                        console.log(err);
+                        errors.push(err)
+                    }
+                    else{
+                        console.log("Following record saved successfully:");
+                        console.log(obj);
+                    }
+                }).catch(err => {
+                // console.log(err);
+                // errors.push(err)
             });
         }
+    }
+    if (errors.length > 0){
+        console.log(errors);
     }
     console.log("records saved for "+ countryCode)    
 }
