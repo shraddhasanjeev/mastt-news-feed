@@ -7,7 +7,7 @@ const newsApiSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    country: {
+    city: {
         type: String,
         required: true
     },

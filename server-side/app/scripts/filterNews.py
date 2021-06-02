@@ -81,14 +81,9 @@ def get_top_n(dict_elem, n):
     result = dict(sorted(dict_elem.items(), key = itemgetter(1), reverse = True)[:n]) 
     return result
 
-# news_data = json.loads(sys.argv[1])
-with open('./NewsData1.txt', 'r', encoding='utf8') as f:
-    news_data = json.load(f)
-
-
 def tfidf(news_data):
     news_descriptions = {}
-    for i in range (news_data["totalResults"]):
+    for i in range (len(news_data["articles"])):
         if (news_data["articles"][i]["title"] != None and news_data["articles"][i]["description"] != None):
             # print(news_data["articles"][i]["title"] + news_data["articles"][i]["description"])
             news_item = news_data["articles"][i]["title"] + news_data["articles"][i]["description"]
@@ -104,28 +99,16 @@ def tfidf(news_data):
             news_descriptions[i] = tf_idf_score
     return news_descriptions
 
-def rake(news_data):
-    r = Rake() 
-    # r = Rake(ranking_metric=Metric.DEGREE_TO_FREQUENCY_RATIO)
-    # r = Rake(ranking_metric=Metric.WORD_DEGREE)
-    r = Rake(ranking_metric=Metric.WORD_FREQUENCY)
-    # r = Rake(min_length=2,max_length=4)
+news_data = json.loads(sys.argv[1])
+# print(news_data)
+# if(news_data["totalResults"] > 100):
+# news_data["totalResults"] = 81
+#with open('./NewsData1.txt', 'r', encoding='utf8') as f:
+#    news_data = json.load(f)
 
-    news_descriptions = {}
-    for i in range (news_data["totalResults"]):
-        if (news_data["articles"][i]["title"] != None and news_data["articles"][i]["description"] != None):
-            # print(news_data["articles"][i]["title"] + news_data["articles"][i]["description"])
-            news_item = news_data["articles"][i]["title"] + news_data["articles"][i]["description"]
-            news_item = preprocess_news_data(news_item)
-            r.extract_keywords_from_text(' '.join(map(str, news_item)))
-            news_descriptions[i] = r.get_ranked_phrases()
-    return news_descriptions
-
-
-# news_map = tfidf(news_data)
-news_map = rake(news_data)
+news_map = tfidf(news_data)
 keywords_freq = {}
-for x in range(news_data["totalResults"]):
+for x in range(len(news_data)):
     for keyword in news_map[x]:
         if keyword not in keywords_freq:
             keywords_freq[keyword] = 1
@@ -136,12 +119,12 @@ sorted_list = dict(sorted(keywords_freq.items(), key=operator.itemgetter(1),reve
 # print(get_top_n(sorted_list,20))
 keywords_list = get_top_n(sorted_list,20)
 
-print(keywords_list)
+# print(keywords_list)
 
 news_match = {}
 
 #calculate jaccard index
-for x in range(news_data["totalResults"]):
+for x in range(len(news_data)):
     news_item = news_data["articles"][x]["title"] + news_data["articles"][x]["description"]
     set1 = set(preprocess_news_data(news_item))
     set2 = set(keywords_list)
@@ -149,38 +132,39 @@ for x in range(news_data["totalResults"]):
     jcc = len(set1.intersection(set2)) / len(set1.union(set2))
     news_match[x] = jcc
 
-print(news_match)
+# print(news_match)
 
 #calculate using spacy 
-nlp = spacy.load("en_core_web_lg")
-keywords_str = ' '.join(map(str, keywords_list))
-keywords_tokens = nlp(keywords_str)
-for x in range(news_data["totalResults"]):
-    news_item = news_data["articles"][x]["title"] + news_data["articles"][x]["description"]
-    news_item = preprocess_news_data(news_item)
-    news_item = ' '.join(map(str, news_item))
-    news_item = nlp(news_item)
-    news_match[x] = news_item.similarity(keywords_tokens)
+# nlp = spacy.load("en_core_web_lg")
+# keywords_str = ' '.join(map(str, keywords_list))
+# keywords_tokens = nlp(keywords_str)
+# for x in range(news_data["totalResults"]):
+#     news_item = news_data["articles"][x]["title"] + news_data["articles"][x]["description"]
+#     news_item = preprocess_news_data(news_item)
+#     news_item = ' '.join(map(str, news_item))
+#     news_item = nlp(news_item)
+#     news_match[x] = news_item.similarity(keywords_tokens)
 
 sorted_news = dict(sorted(news_match.items(), key=operator.itemgetter(1),reverse=True))
 result = {}
 
 #remove similar news
-for key,value in sorted_news.items():
-    if value not in result.values():
-        result[key] = value
-# top_news = get_top_n(sorted_news,10)
+# for key,value in sorted_news.items():
+#     if value not in result.values():
+#         result[key] = value
+# top_news =  get_top_n(sorted_news,10)
 
 # dict_keys = top_news.keys()
-final_news = {}
-sorted_news_keys = list(result.keys())
-print(result.items())
+final_news = []
+sorted_news_keys = list(sorted_news.keys())
+# print(result.items())
 i = 0
-while len(final_news.keys()) < 10:
+while len(final_news) <= 5 and i < len(sorted_news_keys):
     k = sorted_news_keys[i]
-    final_news[news_data["articles"][k]["title"]] = news_data["articles"][k]["description"]
+    # final_news[news_data["articles"][k]["title"]] = news_data["articles"][k]["description"]
+    final_news.append(news_data["articles"][k])
     i+=1
 
-for k, v in final_news.items():
-    print("\n news article")
-    print(k, v)
+j = json.dumps(final_news)
+print(j)
+sys.stdout.flush()

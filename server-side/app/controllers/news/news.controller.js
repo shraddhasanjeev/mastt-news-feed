@@ -12,47 +12,69 @@ function getParameterByName(name, url) {
 }
 
 function processNewsData(result){
+
+    const cityName = getParameterByName("q",result.url)
     var spawn = require('child_process').spawn;
     var errors = []
     var res = result.data
     var filteredNews = []
     var filterNewsData = spawn('python', ['./app/scripts/filterNews.py', JSON.stringify(result.data)]);
-    filterNewsData.stdout.on('data', function(pythonData) {
-        console.log(JSON.stringify(pythonData.toString()));
-        // filteredNews.push(data);
-    })
-    const countryCode = getParameterByName("country",result.url)
-    // const countryCode = getParameterByName("q",result.url)
-    for(let i=0; i< res.totalResults; i++){
-        if(res.articles[i] != undefined){
-            let start_date = new Date(res.articles[i]["publishedAt"])
-            start_date.setHours(0,0,0,0);
-            let end_date = new Date(start_date);
-            end_date.setDate(start_date.getDate() + 1)
-            var newsItem = new newsSchema({
-                title: res.articles[i]["title"] ,
-                sourceUrl: res.articles[i]["url"],
-                image: res.articles[i]["urlToImage"],
-                content: res.articles[i]["description"], 
-                start_date: start_date,
-                end_date: end_date,
-                country: countryCode
-            })
-            newsItem.save().catch(err => {
-                errors.push(err)
-            });
+    filterNewsData.stderr.pipe(process.stderr);
+    filterNewsData.stdout.on('data', function(data) {
+        filteredNews = JSON.parse(data);
+        for(let i=0; i< filteredNews.length; i++){
+            if(filteredNews[i] != undefined){
+                let start_date = new Date(filteredNews[i]["publishedAt"])
+                start_date.setHours(0,0,0,0);
+                let end_date = new Date(start_date);
+                end_date.setDate(start_date.getDate() + 1)
+                var newsItem = new newsSchema({
+                    title: filteredNews[i]["title"] ,
+                    sourceUrl: filteredNews[i]["url"],
+                    image: filteredNews[i]["urlToImage"],
+                    content: filteredNews[i]["description"], 
+                    start_date: start_date,
+                    end_date: end_date,
+                    city: cityName
+                })
+                newsItem.save(function(err, obj){
+                    if(err){
+                        console.log(err)
+                    }
+                    else{
+                        console.log("record saved" + obj)
+                    }
+                });
+            }
         }
-    }
-    console.log(res.totalResults + " records saved for "+ countryCode)    
+    })      
+}
+
+function getDate(dateObj){
+    dateObj = new Date(dateObj);
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    return year + "-" + month + "-" + day;
 }
 
 function fetchNewsFromThirdParty(){
     var newsUrls = [];
     //var newsUrls = ["https://newsapi.org/v2/everything?q=sydney&sortBy=relevancy&from=2021-05-14&to=2021-05-19&domains="+ config.newsUrls.sydneyUrls + "&apiKey=" + config.tokens.newsapi];
-    for(var country in config.countryCodes){
-        newsUrls.push("https://newsapi.org/v2/top-headlines?country=" + config.countryCodes[country] + "&category=general" + "&apiKey=" + config.tokens.newsapi)
+    var startDate = new Date();
+    var endDate =  new Date(startDate);
+    endDate.setDate(startDate.getDate() - 2)
+    for(var city in config.newsUrls){
+        // for (var i in config.newsUrls[city]){
+            newsUrls.push("https://newsapi.org/v2/everything?q=" + city + "&sortBy=relevancy&from="+ getDate(startDate)+"&to="+ getDate(endDate)+ "&domains="+ config.newsUrls[city] + "&apiKey=" + config.tokens.newsapi)
+        // }
     }
-
+    // for(var country in config.countryCodes){
+    //     newsUrls.push("https://newsapi.org/v2/top-headlines?country=" + config.countryCodes[country] + "&category=general" + "&apiKey=" + config.tokens.newsapi)
+    // }
+    // allResults = []
+    
     Promise.all(
         newsUrls.map(url => fetch(url)
           .then(r => r.json())
@@ -60,9 +82,13 @@ function fetchNewsFromThirdParty(){
           .then(result => processNewsData(result))
           .catch(error => ({ error, url }))
         )
-    )         
+    )
+
+    //console.log(allResults.length)
+    //
     
 }
+
 
 function getNews(req,res){
 
