@@ -9,9 +9,7 @@ update()
 async function update() {
     let r1 = await checkForUpdate()
     if (r1 == "Valid") {
-        console.log("Holiday API: up-to-date")
     } else if (r1 == "Updated") {
-        console.log("Holiday API: Updating data")
         await updateData()
     } else {
         throw new Error("Failed to fetch last update date")
@@ -20,7 +18,6 @@ async function update() {
 }
 
 function checkForUpdate() {
-    console.log("Holiday API: check for update")
     return new Promise(function (resolve, reject) {
         thisYear = new Date().getFullYear()
         var fs = require('fs')
@@ -30,7 +27,6 @@ function checkForUpdate() {
         if (lastFetch == thisYear) {
             resolve("Valid")
         } else {
-            console.log("Holiday API: Updated")
             resolve("Updated")
         }
     })

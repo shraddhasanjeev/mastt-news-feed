@@ -92,7 +92,6 @@ function archiveNews(req, res) {
         res.header('Access-Control-Allow-Origin', '*');
         const id = req.query.id;
         newsSchema.findByIdAndUpdate(id, { "archived": true }, (err, res) => {
-            console.log(res + " archived")
         })
     }
 }
