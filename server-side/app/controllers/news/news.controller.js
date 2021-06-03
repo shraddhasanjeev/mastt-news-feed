@@ -86,11 +86,22 @@ async function fetchNewsFromThirdParty(){
 
 
 function getNews(req,res){
+    if (validateToken(req.query.token)) {
+        const currentDate = new Date();
+        var startDate = new Date(currentDate);
+        startDate.setDate(currentDate.getDate() - 2)
 
-    const currentDate = new Date();
-    var startDate = new Date(currentDate);
-    startDate.setDate(currentDate.getDate() - 2)
-    startDate.setHours(0,0,0,0);
+        res.header('Access-Control-Allow-Origin', '*');
+        // const docquery = newsSchema.find({country: country});
+        const docquery = newsSchema.find({ start_date: { $gte: startDate.getTime() } })
+            .where('archived').equals(false)
+        docquery.exec().then(news => {
+            res.json(news);
+        }).catch(err => {
+            res.status(500).send(err);
+        });
+    }
+}
 
 function archiveNews(req, res) {
     if (validateToken(req.query.token)) {
