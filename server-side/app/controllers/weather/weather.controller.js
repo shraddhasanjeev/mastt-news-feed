@@ -37,7 +37,6 @@ module.exports.fetchWeatherFromThirdParty = function(){
                 else{
                     weather.alert = null;
                 }
-                console.log(weather);
                 weather.save().catch(err => {
                     errors.push(err)
                 });

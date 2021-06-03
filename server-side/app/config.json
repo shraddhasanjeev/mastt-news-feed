@@ -4,54 +4,38 @@
     "newsapi": "3d950b0274e345c59f1126c250d4176c"
   },
   "locationCoordinates": [
-    {
-      "cityName": "Hyderabad",
-      "latitude": "17.404231321770673",
-      "longitude": "78.47726777884779"
-    },
-    {
-      "cityName": "Manila",
-      "latitude": "14.600437303553875",
-      "longitude": "120.9842747489771"
-    },
-    {
-      "cityName": "Sydney",
-      "latitude": "-33.867662015138315",
-      "longitude": "151.2091017163976"
-    },
-    {
-      "cityName": "Buenos Aires",
-      "latitude": "-34.60082735951941",
-      "longitude": "-58.44222726318848"
-    }
+      {
+          "cityName": "Hyderabad",
+          "latitude": "17.404231321770673",
+          "longitude": "78.47726777884779"
+      },
+      {
+          "cityName": "Manilla",
+          "latitude": "14.600437303553875",
+          "longitude": "120.9842747489771"
+      },
+      {
+          "cityName": "Sydney",
+          "latitude": "-33.867662015138315",
+          "longitude": "151.2091017163976"
+      },
+      {
+          "cityName": "Buenos Aires",
+          "latitude": "-34.60082735951941",
+          "longitude": "-58.44222726318848"
+      }
   ],
   "countryCodes": {
-    "Argentina": "ar",
-    "Australia": "au",
-    "India": "in",
-    "Phillippines": "ph"
+      "Argentina": "ar",
+      "Australia": "au",
+      "India": "in",
+      "Phillippines": "ph" 
+  },    
+  "newsUrls":{
+      "sydney": ["news.com.au","heraldsun.com.au","news.com.au","theage.com.au","smh.com.au","news.google.com","abc.net.au","bbc.co.uk","reuters.com","cnn.com"]
   },
-  "intervals": {
-    "holiday": 43200000,
-    "news": 43200000,
-    "weather": 240000
-  },
-  "countryHoliday": [
-    {
-      "country": "Argentina",
-      "link": "https://www.officeholidays.com/countries/argentina"
-    },
-    {
-      "country": "Australia",
-      "link": "https://www.officeholidays.com/countries/australia"
-    },
-    {
-      "country": "India",
-      "link": "https://www.officeholidays.com/countries/india"
-    },
-    {
-      "country": "Phillippines",
-      "link": "https://www.officeholidays.com/countries/philippines"
-    }
-  ]
+  "intervals":{
+      "news": 43200000,
+      "weather": 43200000
+  }    
 }
