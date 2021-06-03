@@ -54,6 +54,7 @@ Country Names: [ "Argentina", "Phillippines","India", "Australia"]
   > Using any command line tool like Powershell run the following:
     
     > pip install nltk
+    > pip install numpy
 
   > Open any IDE like VSCode
   
