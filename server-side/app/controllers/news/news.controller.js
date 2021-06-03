@@ -64,7 +64,7 @@ async function fetchNewsFromThirdParty(){
     endDate.setDate(startDate.getDate() - 7);
     for(var city in config.newsUrls){
         for (var i in config.newsUrls[city]){
-            newsUrls.push("https://newsapi.org/v2/everything?q=" + city + "&sortBy=relevancy&from="+ getDate(startDate)+"&to="+ getDate(endDate)+ "&domains="+ config.newsUrls[city][i] + "&apiKey=" + config.tokens.newsapi)
+            newsUrls.push("https://newsapi.org/v2/everything?q=" + city + "&sortBy=relevancy&from="+ getDate(startDate)+"&to="+ getDate(endDate)+ "&domains="+ config.newsUrls[city][i] + "&pageSize=100&apiKey=" + config.tokens.newsapi)
         }
     }
     // for(var country in config.countryCodes){
