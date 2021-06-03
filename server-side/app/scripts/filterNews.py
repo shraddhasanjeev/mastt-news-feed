@@ -1,21 +1,19 @@
 import sys
 import json
-from warnings import catch_warnings
 from nltk import tokenize
 from operator import itemgetter
 import math
-# import nltk
-# nltk.download('stopwords')
-# nltk.download('wordnet')
+import nltk
+nltk.download('stopwords')
+nltk.download('wordnet')
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
 from nltk.stem import WordNetLemmatizer
 import operator
-from rake_nltk import Rake
 import numpy as np
-import spacy
-from rake_nltk import Metric, Rake
+
+#import spacy
 
 def preprocess_news_data(news_data):
     #convert data to lower case
@@ -101,8 +99,6 @@ def tfidf(news_data):
 
 news_data = json.loads(sys.argv[1])
 # print(news_data)
-# if(news_data["totalResults"] > 100):
-# news_data["totalResults"] = 81
 #with open('./NewsData1.txt', 'r', encoding='utf8') as f:
 #    news_data = json.load(f)
 
