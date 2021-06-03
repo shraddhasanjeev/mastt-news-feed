@@ -32,10 +32,10 @@
         "Phillippines": "ph" 
     },    
     "newsUrls":{
-        "sydney": ["news.com.au,heraldsun.com.au,news.com.au,theage.com.au,smh.com.au,news.google.com,abc.net.au,bbc.co.uk,reuters.com,cnn.com"]
+        "sydney": ["news.com.au","heraldsun.com.au","news.com.au","theage.com.au","smh.com.au","news.google.com","abc.net.au","bbc.co.uk","reuters.com","cnn.com"]
     },
     "intervals":{
         "news": 43200000,
         "weather": 43200000
-    }
+    }    
 }

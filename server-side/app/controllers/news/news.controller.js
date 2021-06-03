@@ -11,14 +11,10 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
-function processNewsData(result){
-
-    const cityName = getParameterByName("q",result.url)
+function processNewsData(result, city){
     var spawn = require('child_process').spawn;
-    var errors = []
-    var res = result.data
     var filteredNews = []
-    var filterNewsData = spawn('python', ['./app/scripts/filterNews.py', JSON.stringify(result.data)]);
+    var filterNewsData = spawn('python', ['./app/scripts/filterNews.py', JSON.stringify(result)]);
     filterNewsData.stderr.pipe(process.stderr);
     filterNewsData.stdout.on('data', function(data) {
         filteredNews = JSON.parse(data);
@@ -35,7 +31,7 @@ function processNewsData(result){
                     content: filteredNews[i]["description"], 
                     start_date: start_date,
                     end_date: end_date,
-                    city: cityName
+                    city: city
                 })
                 newsItem.save(function(err, obj){
                     if(err){
@@ -59,34 +55,32 @@ function getDate(dateObj){
     return year + "-" + month + "-" + day;
 }
 
-function fetchNewsFromThirdParty(){
+async function fetchNewsFromThirdParty(){
     var newsUrls = [];
-    //var newsUrls = ["https://newsapi.org/v2/everything?q=sydney&sortBy=relevancy&from=2021-05-14&to=2021-05-19&domains="+ config.newsUrls.sydneyUrls + "&apiKey=" + config.tokens.newsapi];
     var startDate = new Date();
     var endDate =  new Date(startDate);
     endDate.setDate(startDate.getDate() - 2)
-    for(var city in config.newsUrls){
-        // for (var i in config.newsUrls[city]){
-            newsUrls.push("https://newsapi.org/v2/everything?q=" + city + "&sortBy=relevancy&from="+ getDate(startDate)+"&to="+ getDate(endDate)+ "&domains="+ config.newsUrls[city] + "&apiKey=" + config.tokens.newsapi)
-        // }
-    }
+    // for(var city in config.newsUrls){
+        for (var i in config.newsUrls[city]){
+            newsUrls.push("https://newsapi.org/v2/everything?q=" + city + "&sortBy=relevancy&from="+ getDate(startDate)+"&to="+ getDate(endDate)+ "&domains="+ config.newsUrls[city][i] + "&apiKey=" + config.tokens.newsapi)
+        }
+    // }
     // for(var country in config.countryCodes){
     //     newsUrls.push("https://newsapi.org/v2/top-headlines?country=" + config.countryCodes[country] + "&category=general" + "&apiKey=" + config.tokens.newsapi)
     // }
-    // allResults = []
+    console.log(newsUrls)
+    allResults = []
     
-    Promise.all(
+    await Promise.all(
         newsUrls.map(url => fetch(url)
           .then(r => r.json())
           .then(data => ({ data, url }))
-          .then(result => processNewsData(result))
+          .then(result => allResults.push(result.data["articles"]))
           .catch(error => ({ error, url }))
         )
     )
-
-    //console.log(allResults.length)
-    //
-    
+    // const cityName = getParameterByName("q",result)
+    processNewsData(allResults, city)    
 }
 
 
