@@ -29,9 +29,9 @@ Remote Working Dashboard - News Feed is a website and an accompanying API which 
 
 - Weather
 
- > City Name: ["Buenos Aires","Hyderabad", "Manila", "Sydney"]
+  > City Name: ["Buenos Aires","Hyderabad", "Manila", "Sydney"]
 
-  `https://mastt-news-feed-server.azurewebsites.net/getWeatherByCity?city=[INSERT_city_Name_here]&token=f39236376746483bb4f7922954f2f503`
+`https://mastt-news-feed-server.azurewebsites.net/getWeatherByCity?city=[INSERT_city_Name_here]&token=f39236376746483bb4f7922954f2f503`
   
 - News
 
@@ -41,7 +41,7 @@ Remote Working Dashboard - News Feed is a website and an accompanying API which 
 
   > Country Names: [ "Argentina", "Phillippines","India", "Australia"]
   
-  `http://mastt-news-feed-server.azurewebsites.net/getHoliday?city=[INSERT_Country_Name_Here]&token=f39236376746483bb4f7922954f2f503`
+`http://mastt-news-feed-server.azurewebsites.net/getHoliday?city=[INSERT_Country_Name_Here]&token=f39236376746483bb4f7922954f2f503`
   
 # Local Compilation & Installation
 
