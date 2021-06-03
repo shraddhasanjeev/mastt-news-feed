@@ -9,7 +9,7 @@ export default function Holidays() {
 
     useEffect(() => {
         const fetchData = async () => {
-            let countries = ["Australia", "India", "Argentina", "Phillippines"]
+            let countries = [ "Argentina", "Phillippines","India", "Australia"]
             const responses = await Promise.all(
                 countries.map((country) => axios.get(`http://mastt-news-feed-server.azurewebsites.net/getHoliday?city=${country}&token=f39236376746483bb4f7922954f2f503`))
             )
@@ -32,7 +32,7 @@ export default function Holidays() {
                                 </Card.Description>
                             </Card.Content>
                             <Card.Content extra>
-                                {item.start_date.slice(0,10)}
+                                {item.start_date.slice(5,10)}-{item.start_date.slice(0,4)}
                             </Card.Content>
                         </Card>
                     })

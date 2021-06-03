@@ -11,29 +11,12 @@ export default class Nav extends Component {
                     <Container>
 
                         <Menu.Item style={{ height: 65 }}
-                            name='news'
-                            // 如果不使用as='div'那么就会将这个渲染成a标签，而下面link也是个a标签，就会报错
-                            // 把它当做div渲染就会解决
+                            name='navbar'
                             as='div'
                         >
-                            News
+                            Mastt Dashboard
                             </Menu.Item>
-                        <Menu.Item style={{ height: 65 }}
-                            name='weather'
-                            // 如果不使用as='div'那么就会将这个渲染成a标签，而下面link也是个a标签，就会报错
-                            // 把它当做div渲染就会解决
-                            as='div'
-                        >
-                            Weather
-                            </Menu.Item>
-                        <Menu.Item style={{ height: 65 }}
-                            name='holidays'
-                            // 如果不使用as='div'那么就会将这个渲染成a标签，而下面link也是个a标签，就会报错
-                            // 把它当做div渲染就会解决
-                            as='div'
-                        >
-                            Holidays
-                            </Menu.Item>
+                        
 
                     </Container>
                 </Menu>

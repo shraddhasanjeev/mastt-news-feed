@@ -10,7 +10,7 @@ export default function Weather() {
 
     useEffect(() => {
         const fetchData = async () => {
-            let cities = ["Hyderabad", "Manila", "Buenos Aires", "Sydney"]
+            let cities = ["Buenos Aires","Hyderabad", "Manila", "Sydney"]
             const responses = await Promise.all(
                 cities.map((city) => axios.get(`https://mastt-news-feed-server.azurewebsites.net/getWeatherByCity?city=${city}&token=f39236376746483bb4f7922954f2f503`))
             )
@@ -38,7 +38,6 @@ export default function Weather() {
                             </Card.Content>
                             <Card.Content extra>
                             </Card.Content>
-                            <Button onClick={()=>{setId(item._id)}} primary>disable</Button>
 
                         </Card>
                     })
@@ -46,5 +45,4 @@ export default function Weather() {
             </Card.Group>
         </Container>
     )
-    // }
 }
