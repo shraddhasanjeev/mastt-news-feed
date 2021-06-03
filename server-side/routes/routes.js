@@ -3,27 +3,16 @@ const router = express.Router();
 
 var weatherController = require('../app/controllers/weather/weather.controller');
 var newsController = require('../app/controllers/news/news.controller');
-var mainController = require('../app/controllers/main/mainController');
+var holidayController = require('../app/controllers/holiday/holiday.controller');
 
 /* Main */
-router.get('/holiday', mainController.getAllHolidays)
-router.get('/weather', mainController.getAllWeather)
-router.get('/news', mainController.getAllNews)
-
-router.get('/getIndiaHoliday', mainController.getNextIndiaHoliday)
-router.get('/getPhilippinesHoliday', mainController.getNextPhilippinesHoliday)
-router.get('/getArgentinaHoliday', mainController.getNextArgentinaHoliday)
-router.get('/getAustraliaHoliday', mainController.getNextAustraliaHoliday)
-
-
-/* Holiday */
-const holidayRouter = require('./holidayRoutes');
-//router.get('/holiday', holidayRouter)
+router.get('/getHoliday', holidayController.getHoliday)
 
 /* Weather API */
 router.get('/getWeatherByCity', weatherController.getWeatherByCity);
 
 /* News API */
 router.get('/getNews', newsController.getNews)
+router.get('/archiveNews', newsController.archiveNews)
 
 module.exports = router;

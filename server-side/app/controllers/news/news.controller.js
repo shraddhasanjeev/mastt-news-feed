@@ -1,6 +1,7 @@
 const fetch = require("node-fetch");
 const config = require("../../config.json");
 var newsSchema = require("../../models/newsSchema");
+const validateToken = require('../security')
 
 function getParameterByName(name, url) {
     name = name.replace(/[\[\]]/g, '\\$&');
@@ -31,7 +32,8 @@ function processNewsData(result, city){
                     content: filteredNews[i]["description"], 
                     start_date: start_date,
                     end_date: end_date,
-                    city: city
+                    city: city,
+                    archived: false
                 })
                 newsItem.save(function(err, obj){
                     if(err){
@@ -85,20 +87,32 @@ async function fetchNewsFromThirdParty(){
 
 
 function getNews(req,res){
+    if (validateToken(req.query.token)) {
+        const currentDate = new Date();
+        var startDate = new Date(currentDate);
+        startDate.setDate(currentDate.getDate() - 2)
+        startDate.setHours(0,0,0,0);
 
-    const currentDate = new Date();
-    var startDate = new Date(currentDate);
-    startDate.setDate(currentDate.getDate() - 2)
-    startDate.setHours(0,0,0,0);
-
-    res.header('Access-Control-Allow-Origin', '*');
-    // const docquery = newsSchema.find({country: country});
-    const docquery = newsSchema.find({start_date: {$gte: startDate.getTime()}})
-    docquery.exec().then(news => {
-      res.json(news);
-    }).catch(err => {
-      res.status(500).send(err);
-    });
+        res.header('Access-Control-Allow-Origin', '*');
+        // const docquery = newsSchema.find({country: country});
+        const docquery = newsSchema.find({ start_date: { $gte: startDate.getTime() } })
+            .where('archived').equals(false)
+        docquery.exec().then(news => {
+            res.json(news);
+        }).catch(err => {
+            res.status(500).send(err);
+        });
+    }
 }
 
-module.exports = {fetchNewsFromThirdParty, getNews};
+function archiveNews(req, res) {
+    if (validateToken(req.query.token)) {
+        res.header('Access-Control-Allow-Origin', '*');
+        const id = req.query.id;
+        newsSchema.findByIdAndUpdate(id, { "archived": true }, (err, res) => {
+            console.log(res + " archived")
+        })
+    }
+}
+
+module.exports = { fetchNewsFromThirdParty, getNews, archiveNews};

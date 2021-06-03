@@ -17,7 +17,7 @@ const router = require('./routes/routes');
 app.use('/', router )
 
 app.listen(azurePort, function () {
-	console.log('News Feed app listening on port 3000!')
+	console.log('News Feed app listening on port:' + azurePort)
 });
 
 module.exports = app;
