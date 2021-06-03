@@ -61,12 +61,12 @@ async function fetchNewsFromThirdParty(){
     var newsUrls = [];
     var startDate = new Date();
     var endDate =  new Date(startDate);
-    endDate.setDate(startDate.getDate() - 2)
-    // for(var city in config.newsUrls){
+    endDate.setDate(startDate.getDate() - 7);
+    for(var city in config.newsUrls){
         for (var i in config.newsUrls[city]){
             newsUrls.push("https://newsapi.org/v2/everything?q=" + city + "&sortBy=relevancy&from="+ getDate(startDate)+"&to="+ getDate(endDate)+ "&domains="+ config.newsUrls[city][i] + "&apiKey=" + config.tokens.newsapi)
         }
-    // }
+    }
     // for(var country in config.countryCodes){
     //     newsUrls.push("https://newsapi.org/v2/top-headlines?country=" + config.countryCodes[country] + "&category=general" + "&apiKey=" + config.tokens.newsapi)
     // }
@@ -77,11 +77,15 @@ async function fetchNewsFromThirdParty(){
         newsUrls.map(url => fetch(url)
           .then(r => r.json())
           .then(data => ({ data, url }))
-          .then(result => allResults.push(result.data["articles"]))
+          .then(result => {
+              if(result.data["articles"][0] != null && result.data["articles"][0] != "")
+                allResults.push(result.data["articles"][0]);
+            })
           .catch(error => ({ error, url }))
         )
     )
     // const cityName = getParameterByName("q",result)
+    console.log("Hello: " + JSON.stringify(allResults));
     processNewsData(allResults, city)    
 }
 

@@ -81,10 +81,10 @@ def get_top_n(dict_elem, n):
 
 def tfidf(news_data):
     news_descriptions = {}
-    for i in range (len(news_data["articles"])):
-        if (news_data["articles"][i]["title"] != None and news_data["articles"][i]["description"] != None):
-            # print(news_data["articles"][i]["title"] + news_data["articles"][i]["description"])
-            news_item = news_data["articles"][i]["title"] + news_data["articles"][i]["description"]
+    for i in range (len(news_data)):
+        if (news_data[i]["title"] != None and news_data[i]["description"] != None):
+            # print(news_data[i]["title"] + news_data[i]["description"])
+            news_item = news_data[i]["title"] + news_data[i]["description"]
             total_sentences = tokenize.sent_tokenize(news_item)
             total_words = preprocess_news_data(news_item)
             tf_score = calculate_tf(total_words)
@@ -121,7 +121,7 @@ news_match = {}
 
 #calculate jaccard index
 for x in range(len(news_data)):
-    news_item = news_data["articles"][x]["title"] + news_data["articles"][x]["description"]
+    news_item = news_data[x]["title"] + news_data[x]["description"]
     set1 = set(preprocess_news_data(news_item))
     set2 = set(keywords_list)
 
@@ -135,7 +135,7 @@ for x in range(len(news_data)):
 # keywords_str = ' '.join(map(str, keywords_list))
 # keywords_tokens = nlp(keywords_str)
 # for x in range(news_data["totalResults"]):
-#     news_item = news_data["articles"][x]["title"] + news_data["articles"][x]["description"]
+#     news_item = news_data[x]["title"] + news_data[x]["description"]
 #     news_item = preprocess_news_data(news_item)
 #     news_item = ' '.join(map(str, news_item))
 #     news_item = nlp(news_item)
@@ -157,8 +157,8 @@ sorted_news_keys = list(sorted_news.keys())
 i = 0
 while len(final_news) <= 5 and i < len(sorted_news_keys):
     k = sorted_news_keys[i]
-    # final_news[news_data["articles"][k]["title"]] = news_data["articles"][k]["description"]
-    final_news.append(news_data["articles"][k])
+    # final_news[news_data[k]["title"]] = news_data[k]["description"]
+    final_news.append(news_data[k])
     i+=1
 
 j = json.dumps(final_news)
