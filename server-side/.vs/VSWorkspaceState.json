@@ -7,8 +7,9 @@
     "\\app\\controllers\\main",
     "\\app\\controllers\\news",
     "\\app\\controllers\\weather",
+    "\\app\\views",
     "\\routes"
   ],
-  "SelectedNode": "\\app\\controllers\\news\\news.controller.js",
+  "SelectedNode": "\\package-lock.json",
   "PreviewInSolutionExplorer": false
 }
