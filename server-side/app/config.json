@@ -36,6 +36,6 @@
     },
     "intervals":{
         "news": 43200000,
-        "weather": 43200000
+        "weather": 240000
     }    
 }
