@@ -1,6 +1,7 @@
 const fetch = require("node-fetch");
 const config = require("../../config.json");
 var newsSchema = require("../../models/newsSchema");
+const PythonShell = require('python-shell');
 const validateToken = require('../security')
 
 function getParameterByName(name, url) {
@@ -13,12 +14,18 @@ function getParameterByName(name, url) {
 }
 
 function processNewsData(result, city){
+    console.log("process started:" + JSON.stringify(result));
     var spawn = require('child_process').spawn;
     var filteredNews = []
     var filterNewsData = spawn('python', ['./app/scripts/filterNews.py', JSON.stringify(result)]);
+    // var pyshell = new PythonShell('./app/scripts/filterNews.py', { mode: 'json' });
+    // pyshell.send(result);
     filterNewsData.stderr.pipe(process.stderr);
     filterNewsData.stdout.on('data', function(data) {
+    // pyshell.on('message', function (data) {
+        console.log("Python Returned: " + data);
         filteredNews = JSON.parse(data);
+        console.log("Filtered News: " + filteredNews);
         for(let i=0; i< filteredNews.length; i++){
             if(filteredNews[i] != undefined){
                 let start_date = new Date(filteredNews[i]["publishedAt"])
@@ -35,12 +42,13 @@ function processNewsData(result, city){
                     city: city,
                     archived: false
                 })
+                console.log("Just before save");
                 newsItem.save(function(err, obj){
                     if(err){
-                        console.log(err)
+                        console.log("Couldn't save records to MongoDB due to: " + err)
                     }
                     else{
-                        console.log("record saved" + obj)
+                        console.log("Records saved" + obj)
                     }
                 });
             }
@@ -57,16 +65,33 @@ function getDate(dateObj){
     return year + "-" + month + "-" + day;
 }
 
+function generateDateArray(currentDate){
+    var dateArr = [];
+    var oneDayinEpoch = 86400000;
+    dateArr.push(getDate(currentDate - (2*oneDayinEpoch)));
+    dateArr.push(getDate(currentDate - oneDayinEpoch));
+    dateArr.push(getDate(currentDate));
+    return dateArr;
+}
+
 async function fetchNewsFromThirdParty(){
     var newsUrls = [];
     var startDate = new Date();
     var endDate =  new Date(startDate);
     endDate.setDate(startDate.getDate() - 7);
-    for(var city in config.newsUrls){
+   
+    /* for(var city in config.newsUrls){
         for (var i in config.newsUrls[city]){
             newsUrls.push("https://newsapi.org/v2/everything?q=" + city + "&sortBy=relevancy&from="+ getDate(startDate)+"&to="+ getDate(endDate)+ "&domains="+ config.newsUrls[city][i] + "&pageSize=100&apiKey=" + config.tokens.newsapi)
         }
+    } */
+
+    for(var city in config.newsUrls){
+        generateDateArray(startDate).forEach(function(date){
+            newsUrls.push("https://newsapi.org/v2/everything?q=" + city + "&sortBy=relevancy&from="+ date +"&to="+ date + "&pageSize=100&apiKey=" + config.tokens.newsapi)
+        });
     }
+
     // for(var country in config.countryCodes){
     //     newsUrls.push("https://newsapi.org/v2/top-headlines?country=" + config.countryCodes[country] + "&category=general" + "&apiKey=" + config.tokens.newsapi)
     // }
@@ -75,18 +100,20 @@ async function fetchNewsFromThirdParty(){
     
     await Promise.all(
         newsUrls.map(url => fetch(url)
-          .then(r => r.json())
-          .then(data => ({ data, url }))
-          .then(result => {
-              if(result.data["articles"][0] != null && result.data["articles"][0] != "")
-                allResults.push(result.data["articles"][0]);
-            })
+            .then(r => r.json())
+            .then(data => ({ data, url }))
+            .then(result => {
+                console.log("Inside Promise: " )
+                if(result.data["articles"] != null && result.data["articles"] != "")
+                    allResults.push(result.data["articles"]);
+                })
+            // .then(processNewsData(allResults, city))
           .catch(error => ({ error, url }))
         )
     )
     // const cityName = getParameterByName("q",result)
-    console.log("Hello: " + JSON.stringify(allResults));
-    processNewsData(allResults, city)    
+    //console.log("Hello: " + JSON.stringify(allResults));
+    processNewsData(allResults, city)
 }
 
 
