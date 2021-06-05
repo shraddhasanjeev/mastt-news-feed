@@ -79,8 +79,22 @@ function getNews(req,res){
         // const docquery = newsSchema.find({country: country});
         const docquery = newsSchema.find({ start_date: { $gte: startDate.getTime() } })
             .where('archived').equals(false)
+
+        const subdocquery = newsSchema.find({ archived: false })
+            .sort({ 'start_date': -1 })
+            .limit(40)
+            
+
         docquery.exec().then(news => {
-            res.json(news);
+            if (news.length == 0) {
+                subdocquery.exec().then(news => {
+                    res.json(news);
+                }).catch(err => {
+                    res.status(500).send(err);
+                });
+            } else {
+                res.json(news);
+            }
         }).catch(err => {
             res.status(500).send(err);
         });
