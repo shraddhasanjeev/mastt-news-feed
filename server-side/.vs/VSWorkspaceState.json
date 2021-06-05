@@ -10,6 +10,6 @@
     "\\app\\views",
     "\\routes"
   ],
-  "SelectedNode": "\\app.js",
+  "SelectedNode": "\\app\\controllers\\news\\news.controller.js",
   "PreviewInSolutionExplorer": false
 }

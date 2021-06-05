@@ -86,15 +86,7 @@ function getNews(req,res){
             
 
         docquery.exec().then(news => {
-            if (news.length == 0) {
-                subdocquery.exec().then(news => {
-                    res.json(news);
-                }).catch(err => {
-                    res.status(500).send(err);
-                });
-            } else {
-                res.json(news);
-            }
+            res.json(news);
         }).catch(err => {
             res.status(500).send(err);
         });
