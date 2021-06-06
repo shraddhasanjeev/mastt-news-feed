@@ -13,7 +13,7 @@ from nltk.stem import WordNetLemmatizer
 import operator
 import numpy as np
 
-#import spacy
+import spacy
 
 def preprocess_news_data(news_data):
     #convert data to lower case
@@ -81,6 +81,7 @@ def get_top_n(dict_elem, n):
 
 def tfidf(news_data):
     news_descriptions = {}
+    #print(len(news_data))
     for i in range (len(news_data)):
         if (news_data[i]["title"] != None and news_data[i]["description"] != None):
             # print(news_data[i]["title"] + news_data[i]["description"])
@@ -97,12 +98,17 @@ def tfidf(news_data):
             news_descriptions[i] = tf_idf_score
     return news_descriptions
 
-news_data = json.loads(sys.argv[1])
-# print(news_data)
+# news_data = json.loads(sys.argv[1])
+news_data = json.loads(input())
+# news_data = json.loads(news_data)
+
+#print(news_data)
 #with open('./NewsData1.txt', 'r', encoding='utf8') as f:
 #    news_data = json.load(f)
 
+#print( type(news_data))
 news_map = tfidf(news_data)
+
 keywords_freq = {}
 for x in range(len(news_data)):
     for keyword in news_map[x]:
@@ -144,23 +150,25 @@ for x in range(len(news_data)):
 sorted_news = dict(sorted(news_match.items(), key=operator.itemgetter(1),reverse=True))
 result = {}
 
-#remove similar news
-# for key,value in sorted_news.items():
-#     if value not in result.values():
-#         result[key] = value
-# top_news =  get_top_n(sorted_news,10)
+# remove similar news
+for key,value in sorted_news.items():
+    if value not in result.values():
+        result[key] = value
+top_news =  get_top_n(sorted_news,10)
 
 # dict_keys = top_news.keys()
 final_news = []
 sorted_news_keys = list(sorted_news.keys())
 # print(result.items())
 i = 0
-while len(final_news) <= 5 and i < len(sorted_news_keys):
+while len(final_news) < 5 and i < len(sorted_news_keys):
     k = sorted_news_keys[i]
     # final_news[news_data[k]["title"]] = news_data[k]["description"]
     final_news.append(news_data[k])
     i+=1
 
-j = json.dumps(final_news)
-print(j)
-sys.stdout.flush()
+
+#j = json.loads(final_news)
+final_news_json = json.dumps(final_news)
+print(final_news_json)
+# sys.stdout.flush()

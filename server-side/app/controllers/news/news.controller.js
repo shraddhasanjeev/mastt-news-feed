@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 const config = require("../../config.json");
 var newsSchema = require("../../models/newsSchema");
-const PythonShell = require('python-shell');
+let {PythonShell} = require('python-shell')
 const validateToken = require('../security')
 
 function getParameterByName(name, url) {
@@ -14,18 +14,24 @@ function getParameterByName(name, url) {
 }
 
 function processNewsData(result, city){
-    console.log("process started:" + JSON.stringify(result));
-    var spawn = require('child_process').spawn;
-    var filteredNews = []
-    var filterNewsData = spawn('python', ['./app/scripts/filterNews.py', JSON.stringify(result)]);
-    // var pyshell = new PythonShell('./app/scripts/filterNews.py', { mode: 'json' });
-    // pyshell.send(result);
-    filterNewsData.stderr.pipe(process.stderr);
-    filterNewsData.stdout.on('data', function(data) {
-    // pyshell.on('message', function (data) {
-        console.log("Python Returned: " + data);
-        filteredNews = JSON.parse(data);
+    console.log("process started.");
+    // var spawn = require('child_process').spawn;
+    // var filterNewsData = spawn('python', ['./app/scripts/filterNews.py', JSON.stringify(result)]);
+    var pyshell = new PythonShell('./app/scripts/filterNews.py', { mode: 'json' });
+    pyshell.send(JSON.parse(JSON.stringify(result)));
+    // filterNewsData.stderr.pipe(process.stderr);
+    // filterNewsData.stdout.on('data', function(data) {
+    pyshell.on('message', function (filteredNews) {
+        console.log("Python Returned: ");
+        /* // console.log(message);
+        // filteredNews = JSON.parse(JSON.stringify(message));
+        console.log("Filtered News: " + message);
+        console.log(message);
+        console.log("Filtered News first: " + message[0]);
+        console.log(message[0]); */
+        
         console.log("Filtered News: " + filteredNews);
+        console.log(filteredNews);
         for(let i=0; i< filteredNews.length; i++){
             if(filteredNews[i] != undefined){
                 let start_date = new Date(filteredNews[i]["publishedAt"])
@@ -53,7 +59,15 @@ function processNewsData(result, city){
                 });
             }
         }
-    })      
+       
+    });
+    
+    pyshell.end(function (err,code,signal) {
+        if (err) throw err;
+        console.log('The exit code was: ' + code);
+        console.log('The exit signal was: ' + signal);
+        console.log('finished');
+      }); 
 }
 
 function getDate(dateObj){
@@ -68,7 +82,6 @@ function getDate(dateObj){
 function generateDateArray(currentDate){
     var dateArr = [];
     var oneDayinEpoch = 86400000;
-    dateArr.push(getDate(currentDate - (2*oneDayinEpoch)));
     dateArr.push(getDate(currentDate - oneDayinEpoch));
     dateArr.push(getDate(currentDate));
     return dateArr;
@@ -78,7 +91,7 @@ async function fetchNewsFromThirdParty(){
     var newsUrls = [];
     var startDate = new Date();
     var endDate =  new Date(startDate);
-    endDate.setDate(startDate.getDate() - 7);
+    endDate.setDate(startDate.getDate() - 1);
    
     /* for(var city in config.newsUrls){
         for (var i in config.newsUrls[city]){
@@ -96,8 +109,9 @@ async function fetchNewsFromThirdParty(){
     //     newsUrls.push("https://newsapi.org/v2/top-headlines?country=" + config.countryCodes[country] + "&category=general" + "&apiKey=" + config.tokens.newsapi)
     // }
     console.log(newsUrls)
+    newsResults = []
     allResults = []
-    
+
     await Promise.all(
         newsUrls.map(url => fetch(url)
             .then(r => r.json())
@@ -105,15 +119,35 @@ async function fetchNewsFromThirdParty(){
             .then(result => {
                 console.log("Inside Promise: " )
                 if(result.data["articles"] != null && result.data["articles"] != "")
-                    allResults.push(result.data["articles"]);
+                {
+                    newsResults.push(result.data["articles"]);
+                }
                 })
-            // .then(processNewsData(allResults, city))
           .catch(error => ({ error, url }))
         )
-    )
+    );
+    // console.log("Before save: " + pythonFeed);
+
+    /* pythonFeed.save(function(err, data){
+        if(err){
+            errors.push(err);
+        }
+        else{
+            // console.log("Inside Save: " + data);
+            // processNewsData(data.id, city)
+            // processNewsData(data.articles, city)
+        }
+    }); */
+    // console.log("All results: " + pythonFeed.articles);
+    console.log("hello");
+    // console.log(pythonFeed.articles);
+    allResults = newsResults[0].concat(newsResults[1]);
+    console.log(allResults.length);
+
+    processNewsData(allResults, city)
+
     // const cityName = getParameterByName("q",result)
     //console.log("Hello: " + JSON.stringify(allResults));
-    processNewsData(allResults, city)
 }
 
 

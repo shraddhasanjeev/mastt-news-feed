@@ -9,6 +9,7 @@
     "express": "^4.17.1",
     "mongoose": "^5.12.5",
     "node-fetch": "^2.6.1",
+    "python-shell": "^3.0.0",
     "request": "^2.88.2",
     "xmlhttprequest": "^1.8.0"
   },
