@@ -23,12 +23,6 @@ function processNewsData(result, city){
     // filterNewsData.stdout.on('data', function(data) {
     pyshell.on('message', function (filteredNews) {
         console.log("Python Returned: ");
-        /* // console.log(message);
-        // filteredNews = JSON.parse(JSON.stringify(message));
-        console.log("Filtered News: " + message);
-        console.log(message);
-        console.log("Filtered News first: " + message[0]);
-        console.log(message[0]); */
         
         console.log("Filtered News: " + filteredNews);
         console.log(filteredNews);
@@ -92,12 +86,6 @@ async function fetchNewsFromThirdParty(){
     var startDate = new Date();
     var endDate =  new Date(startDate);
     endDate.setDate(startDate.getDate() - 1);
-   
-    /* for(var city in config.newsUrls){
-        for (var i in config.newsUrls[city]){
-            newsUrls.push("https://newsapi.org/v2/everything?q=" + city + "&sortBy=relevancy&from="+ getDate(startDate)+"&to="+ getDate(endDate)+ "&domains="+ config.newsUrls[city][i] + "&pageSize=100&apiKey=" + config.tokens.newsapi)
-        }
-    } */
 
     for(var city in config.newsUrls){
         generateDateArray(startDate).forEach(function(date){
@@ -105,9 +93,6 @@ async function fetchNewsFromThirdParty(){
         });
     }
 
-    // for(var country in config.countryCodes){
-    //     newsUrls.push("https://newsapi.org/v2/top-headlines?country=" + config.countryCodes[country] + "&category=general" + "&apiKey=" + config.tokens.newsapi)
-    // }
     console.log(newsUrls)
     newsResults = []
     allResults = []
@@ -126,28 +111,11 @@ async function fetchNewsFromThirdParty(){
           .catch(error => ({ error, url }))
         )
     );
-    // console.log("Before save: " + pythonFeed);
 
-    /* pythonFeed.save(function(err, data){
-        if(err){
-            errors.push(err);
-        }
-        else{
-            // console.log("Inside Save: " + data);
-            // processNewsData(data.id, city)
-            // processNewsData(data.articles, city)
-        }
-    }); */
-    // console.log("All results: " + pythonFeed.articles);
-    console.log("hello");
-    // console.log(pythonFeed.articles);
     allResults = newsResults[0].concat(newsResults[1]);
     console.log(allResults.length);
 
     processNewsData(allResults, city)
-
-    // const cityName = getParameterByName("q",result)
-    //console.log("Hello: " + JSON.stringify(allResults));
 }
 
 
