@@ -81,21 +81,21 @@ function generateDateArray(currentDate){
     return dateArr;
 }
 
-async function fetchNewsFromThirdParty(){
+async function fetchNewsFromThirdParty(city){
     var newsUrls = [];
     var startDate = new Date();
     var endDate =  new Date(startDate);
     endDate.setDate(startDate.getDate() - 1);
 
-    for(var city in config.newsUrls){
+    // for(var city in config.newsUrls){
         generateDateArray(startDate).forEach(function(date){
-            newsUrls.push("https://newsapi.org/v2/everything?q=" + city + "&sortBy=relevancy&from="+ date +"&to="+ date + "&pageSize=100&apiKey=" + config.tokens.newsapi)
+            newsUrls.push("https://newsapi.org/v2/everything?language=en&q=" + city + "&sortBy=relevancy&from="+ date +"&to="+ date + "&pageSize=100&apiKey=" + config.tokens.newsapi)
         });
-    }
+    // }
 
     console.log(newsUrls)
     newsResults = []
-    allResults = []
+    allResults = [] 
 
     await Promise.all(
         newsUrls.map(url => fetch(url)
