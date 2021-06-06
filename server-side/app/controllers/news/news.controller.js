@@ -160,7 +160,7 @@ function getNews(req,res){
 
         res.header('Access-Control-Allow-Origin', '*');
         // const docquery = newsSchema.find({country: country});
-        const docquery = newsSchema.find({ start_date: { $gte: startDate.getTime() } })
+        const docquery = newsSchema.find({ start_date: { $gte: startDate.getTime() }}, null, {limit: 5})
             .where('archived').equals(false)
         docquery.exec().then(news => {
             res.json(news);

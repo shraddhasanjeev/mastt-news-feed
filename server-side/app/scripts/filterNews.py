@@ -161,7 +161,7 @@ final_news = []
 sorted_news_keys = list(sorted_news.keys())
 # print(result.items())
 i = 0
-while len(final_news) < 5 and i < len(sorted_news_keys):
+while len(final_news) < 11 and i < len(sorted_news_keys):
     k = sorted_news_keys[i]
     # final_news[news_data[k]["title"]] = news_data[k]["description"]
     final_news.append(news_data[k])
