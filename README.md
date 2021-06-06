@@ -28,13 +28,21 @@ Remote Working Dashboard - News Feed is a website and an accompanying API which 
 # API endpoints for retrieving data from 3rd party
 
 - Weather
-City Name: ["Buenos Aires","Hyderabad", "Manila", "Sydney"]
-  > https://mastt-news-feed-server.azurewebsites.net/getWeatherByCity?city=[INSERT_city_Name_here]&token=f39236376746483bb4f7922954f2f503
+
+  > City Name: ["Buenos Aires","Hyderabad", "Manila", "Sydney"]
+
+`https://mastt-news-feed-server.azurewebsites.net/getWeatherByCity?city=[INSERT_city_Name_here]&token=f39236376746483bb4f7922954f2f503`
+  
 - News
-  > https://mastt-news-feed-server.azurewebsites.net/getNews?token=f39236376746483bb4f7922954f2f503
+
+`https://mastt-news-feed-server.azurewebsites.net/getNews?token=f39236376746483bb4f7922954f2f503`
+
 - Holiday
-Country Names: [ "Argentina", "Phillippines","India", "Australia"]
-  > http://mastt-news-feed-server.azurewebsites.net/getHoliday?city=[INSERT_Country_Name_Here]&token=f39236376746483bb4f7922954f2f503
+
+  > Country Names: [ "Argentina", "Phillippines","India", "Australia"]
+  
+`http://mastt-news-feed-server.azurewebsites.net/getHoliday?city=[INSERT_Country_Name_Here]&token=f39236376746483bb4f7922954f2f503`
+  
 # Local Compilation & Installation
 
 - Prerequisites
@@ -53,7 +61,8 @@ Country Names: [ "Argentina", "Phillippines","India", "Australia"]
   
   > Using any command line tool like Powershell run the following:
     
-    > pip install nltk
+    * pip install nltk
+    * pip install numpy
 
   > Open any IDE like VSCode
   
