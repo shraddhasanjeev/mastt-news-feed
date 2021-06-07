@@ -3,13 +3,14 @@
     "",
     "\\app",
     "\\app\\controllers",
-    "\\app\\controllers\\holiday",
     "\\app\\controllers\\main",
     "\\app\\controllers\\news",
     "\\app\\controllers\\weather",
+    "\\app\\models",
+    "\\app\\scripts",
     "\\app\\views",
     "\\routes"
   ],
-  "SelectedNode": "\\app\\controllers\\news\\news.controller.js",
+  "SelectedNode": "\\app\\models\\masttDb.js",
   "PreviewInSolutionExplorer": false
 }

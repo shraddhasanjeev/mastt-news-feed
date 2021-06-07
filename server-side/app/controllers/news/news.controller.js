@@ -131,16 +131,14 @@ function getNews(req,res){
         const docquery = newsSchema.find({ start_date: { $gte: startDate.getTime() }}, null, {limit: 5})
             .where('archived').equals(false)
 
-        const subdocquery = newsSchema.find({ archived: false })
-            .sort({ 'start_date': -1 })
-            .limit(40)
-            
-
         docquery.exec().then(news => {
             res.json(news);
         }).catch(err => {
             res.status(500).send(err);
         });
+    } else {
+        res.status(401)
+        res.end()
     }
 }
 
@@ -149,7 +147,13 @@ function archiveNews(req, res) {
         res.header('Access-Control-Allow-Origin', '*');
         const id = req.query.id;
         newsSchema.findByIdAndUpdate(id, { "archived": true }, (err, res) => {
+            console.log(err)
+            console.log(err == undefined)
+            console.log(res)
         })
+    } else {
+        res.status(401)
+        res.end()
     }
 }
 
