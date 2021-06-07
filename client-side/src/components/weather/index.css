@@ -2,3 +2,19 @@
   filter: blur(15px);
 -webkit-filter: blur(15px);
 }
+
+h1{
+  text-align: center;
+}
+
+h3{
+  text-align: center;
+}
+
+img {
+  object-fit: fill;
+  max-width:266px;
+  max-height:172.5px;
+  width: auto;
+  height: auto;
+}
