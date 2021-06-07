@@ -115,6 +115,8 @@ function updateData() {
         var fs = require('fs')
         fs.writeFileSync('./app/controllers/holiday/lastFetch.dat', thisYear.toString())
         resolve("Updated")
+    }).catch(err => {
+        console.error(err)
     })
 }
 

@@ -35,10 +35,30 @@
     "sydney": [ "news.com.au", "heraldsun.com.au", "theage.com.au", "smh.com.au", "news.google.com", "abc.net.au", "bbc.co.uk", "reuters.com", "cnn.com" ]
   },
   "intervals": {
+    "holiday": 43200000,
     "news": 43200000,
     "weather": 240000
   },
-  "security": {
-    "token": "f39236376746483bb4f7922954f2f503"
+  "countryHoliday": 
+    [
+      {
+        "country": "india",
+        "link": "https://www.officeholidays.com/countries/india"
+      },
+      {
+        "country": "argentina",
+        "link": "https://www.officeholidays.com/countries/argentina"
+      },
+      {
+        "country": "australia",
+        "link": "https://www.officeholidays.com/countries/australia"
+      },
+      {
+        "country": "philippines",
+        "link": "https://www.officeholidays.com/countries/philippines"
+      }
+    ],
+    "security": {
+      "token": "f39236376746483bb4f7922954f2f503"
+    }
   }
-}
