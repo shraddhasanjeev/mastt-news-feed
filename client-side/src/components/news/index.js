@@ -56,7 +56,7 @@ export default class News extends Component {
                                     </Item.Description>
                                     <Item.Extra>
                                         <Label>{item.country}</Label>
-                                        <Button floated="right" onClick={this.handleClick(item._id)} primary>disable</Button>
+                                        <Button floated="right" onClick={this.handleClick(item._id)} primary>Not Relevant</Button>
                                     </Item.Extra>
                                 </Item.Content>
                             </Item>

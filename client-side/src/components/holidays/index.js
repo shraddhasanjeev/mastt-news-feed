@@ -28,7 +28,7 @@ export default function Holidays() {
                             <Card.Content>
                                 <Card.Header>{item.city}</Card.Header>
                                 <Card.Description>
-                                    <h4>Holiday: {item.title}</h4>
+                                    <h1>{item.title}</h1>
                                 </Card.Description>
                             </Card.Content>
                             <Card.Content extra>
