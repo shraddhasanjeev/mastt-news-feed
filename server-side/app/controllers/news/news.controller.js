@@ -146,10 +146,15 @@ function archiveNews(req, res) {
     if (validateToken(req.query.token)) {
         res.header('Access-Control-Allow-Origin', '*');
         const id = req.query.id;
-        newsSchema.findByIdAndUpdate(id, { "archived": true }, (err, res) => {
-            console.log(err)
-            console.log(err == undefined)
-            console.log(res)
+        newsSchema.findByIdAndUpdate(id, { "archived": true }, (err) => {
+            if (err == undefined) {
+                res.status(202)
+                res.send("News item Archived successfully")
+                res.end()
+            } else {
+                res.send("Failed to Archive")
+                res.end()
+            }
         })
     } else {
         res.status(401)
