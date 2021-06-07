@@ -12,7 +12,7 @@ export default function Holidays() {
       const responses = await Promise.all(
         countries.map((country) =>
           axios.get(
-            `http://mastt-news-feed-server.azurewebsites.net/getHoliday?city=${country}&token=f39236376746483bb4f7922954f2f503`
+            `https://mastt-news-feed-server.azurewebsites.net/getHoliday?city=${country}&token=f39236376746483bb4f7922954f2f503`
           )
         )
       );
