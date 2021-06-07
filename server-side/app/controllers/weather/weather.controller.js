@@ -61,5 +61,8 @@ module.exports.getWeatherByCity = function (req, res) {
         }).catch(err => {
             res.status(500).send(err);
         });
+    } else {
+        res.status(401)
+        res.end()
     }
 }

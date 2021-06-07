@@ -7,9 +7,10 @@
     "\\app\\controllers\\main",
     "\\app\\controllers\\news",
     "\\app\\controllers\\weather",
-    "\\app\\views",
+    "\\app\\models",
+    "\\app\\scripts",
     "\\routes"
   ],
-  "SelectedNode": "\\app\\controllers\\news\\news.controller.js",
+  "SelectedNode": "\\app\\controllers\\holiday\\lastFetch.dat",
   "PreviewInSolutionExplorer": false
 }

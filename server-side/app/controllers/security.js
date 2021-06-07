@@ -1,9 +1,8 @@
 const express = require('express');
-const token = 'f39236376746483bb4f7922954f2f503'
-
+const config = require('../config.json');
 
 function validateToken(str) {
-    return str == token;
+    return str == config.security.token;
 }
 
 module.exports = validateToken;

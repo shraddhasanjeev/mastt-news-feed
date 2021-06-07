@@ -115,6 +115,8 @@ function updateData() {
         var fs = require('fs')
         fs.writeFileSync('./app/controllers/holiday/lastFetch.dat', thisYear.toString())
         resolve("Updated")
+    }).catch(err => {
+        console.error(err)
     })
 }
 
@@ -137,12 +139,4 @@ module.exports.fetchHoliday = function () {
     update()
 }
 
-var model = require('../../models/masterFeed');
 
-module.exports.getNextHoliday = async function (city) {
-    var data = await model.find({ "category": "holiday" })
-        .where('start_date').gt(new Date().getTime())
-        .where('city').equals(city)
-        .sort("start_date").limit(1)
-    return data
-}
