@@ -28,7 +28,6 @@ def preprocess_news_data(news_data):
     news_data = np.char.replace(news_data, ',', '')
     news_data = np.char.replace(news_data, "'", "")
     
-    # print(news_data)
     #removing stop words and single words then stemming the words
     stop_words = stopwords.words('english')
     stemmer= PorterStemmer()
@@ -81,10 +80,8 @@ def get_top_n(dict_elem, n):
 
 def tfidf(news_data):
     news_descriptions = {}
-    #print(len(news_data))
     for i in range (len(news_data)):
         if (news_data[i]["title"] != None and news_data[i]["description"] != None):
-            # print(news_data[i]["title"] + news_data[i]["description"])
             news_item = news_data[i]["title"] + news_data[i]["description"]
             total_sentences = tokenize.sent_tokenize(news_item)
             total_words = preprocess_news_data(news_item)
@@ -94,19 +91,12 @@ def tfidf(news_data):
             # print(idf_score)
             tf_idf_score = {key: tf_score[key] * idf_score.get(key, 0) for key in tf_score.keys()}
             # print(tf_idf_score)
-            # print(get_top_n(tf_idf_score, 5))
             news_descriptions[i] = tf_idf_score
     return news_descriptions
 
 # news_data = json.loads(sys.argv[1])
 news_data = json.loads(input())
-# news_data = json.loads(news_data)
-
 #print(news_data)
-#with open('./NewsData1.txt', 'r', encoding='utf8') as f:
-#    news_data = json.load(f)
-
-#print( type(news_data))
 news_map = tfidf(news_data)
 
 keywords_freq = {}
@@ -118,7 +108,6 @@ for x in range(len(news_data)):
             keywords_freq[keyword] += 1
 
 sorted_list = dict(sorted(keywords_freq.items(), key=operator.itemgetter(1),reverse=True))
-# print(get_top_n(sorted_list,20))
 keywords_list = get_top_n(sorted_list,20)
 
 # print(keywords_list)
@@ -137,23 +126,25 @@ for x in range(len(news_data)):
 # print(news_match)
 
 #calculate using spacy 
-# nlp = spacy.load("en_core_web_lg")
-# keywords_str = ' '.join(map(str, keywords_list))
-# keywords_tokens = nlp(keywords_str)
-# for x in range(news_data["totalResults"]):
-#     news_item = news_data[x]["title"] + news_data[x]["description"]
-#     news_item = preprocess_news_data(news_item)
-#     news_item = ' '.join(map(str, news_item))
-#     news_item = nlp(news_item)
-#     news_match[x] = news_item.similarity(keywords_tokens)
+#nlp = spacy.load("en_core_web_lg")
+#keywords_str = ' '.join(map(str, keywords_list))
+#keywords_tokens = nlp(keywords_str)
+#for x in range(len(news_data)):
+#    news_item = news_data[x]["title"] + news_data[x]["description"]
+#    news_item = preprocess_news_data(news_item)
+#    news_item = ' '.join(map(str, news_item))
+#    news_item = news_item.encode('UTF-8','ignore').decode('UTF-8')
+#    news_item = nlp(news_item)
+#    news_match[x] = news_item.similarity(keywords_tokens)
 
-sorted_news = dict(sorted(news_match.items(), key=operator.itemgetter(1),reverse=True))
 result = {}
 
 # remove similar news
-for key,value in sorted_news.items():
+for key,value in news_match.items():
     if value not in result.values():
         result[key] = value
+
+sorted_news = dict(sorted(news_match.items(), key=operator.itemgetter(1),reverse=True))
 top_news =  get_top_n(sorted_news,10)
 
 # dict_keys = top_news.keys()
@@ -161,9 +152,8 @@ final_news = []
 sorted_news_keys = list(sorted_news.keys())
 # print(result.items())
 i = 0
-while len(final_news) < 11 and i < len(sorted_news_keys):
+while len(final_news) < 10 and i < len(sorted_news_keys):
     k = sorted_news_keys[i]
-    # final_news[news_data[k]["title"]] = news_data[k]["description"]
     final_news.append(news_data[k])
     i+=1
 
