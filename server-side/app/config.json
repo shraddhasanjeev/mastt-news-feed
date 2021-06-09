@@ -1,7 +1,7 @@
 {
   "tokens": {
     "openweatherapi": "ba21ad3c5ee233cb6ed93a261f758fc5",
-    "newsapi": "3d950b0274e345c59f1126c250d4176c"
+    "newsapi": "01f6a02436a04ad78ab37f185070268b"
   },
   "locationCoordinates": [
     {
@@ -36,7 +36,12 @@
   },
   "intervals": {
     "holiday": 43200000,
-    "news": 43200000,
+    "news": {
+      "sydney" : 43200000,
+      "hyderabad" : 43200000,
+      "manila" : 43200000,
+      "buenos_aires" : 43200000
+    },
     "weather": 240000
   },
   "countryHoliday": 

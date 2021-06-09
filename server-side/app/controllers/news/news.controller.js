@@ -119,23 +119,31 @@ async function fetchNewsFromThirdParty(city){
 }
 
 
-function getNews(req,res){
+async function getNews(req,res){
+    var newsResults = []
+    var count = 0
     if (validateToken(req.query.token)) {
         const currentDate = new Date();
         var startDate = new Date(currentDate);
         startDate.setDate(currentDate.getDate() - 2)
         startDate.setHours(0,0,0,0);
-
+        var cityCount = Object.keys(config.intervals.news).length
         res.header('Access-Control-Allow-Origin', '*');
-        // const docquery = newsSchema.find({country: country});
-        const docquery = newsSchema.find({ start_date: { $gte: startDate.getTime() }}, null, {limit: 5})
+        for (var city in config.intervals.news){
+            var docquery = newsSchema.find({ city: city, start_date: { $gte: startDate.getTime() }}, null, {limit: 2})
             .where('archived').equals(false)
-
-        docquery.exec().then(news => {
-            res.json(news);
-        }).catch(err => {
-            res.status(500).send(err);
-        });
+            docquery.exec().then(news => {
+                count +=1;
+                if(news.length > 0){
+                    for (var i in news)
+                        newsResults.push(news[i])
+                }
+                if(count == cityCount)
+                    res.json(newsResults);
+            }).catch(err => {
+                res.status(500).send(err);
+            });
+        }
     } else {
         res.status(401)
         res.end()
