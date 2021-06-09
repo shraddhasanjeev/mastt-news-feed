@@ -8,7 +8,7 @@ export default function Holidays() {
 
   useEffect(() => {
     const fetchData = async () => {
-      let countries = ["Argentina", "Philippines", "India", "Australia"];
+      let countries = ["Argentina", "India", "Philippines", "Australia"];
       const responses = await Promise.all(
         countries.map((country) =>
           axios.get(
