@@ -21,9 +21,9 @@ Remote Working Dashboard - News Feed is a website and an accompanying API which 
 
 # Cloud URLs for Testing
 
-- [Server Side URL][serverSideURL]
+- [Server Side][serverSideURL]
 
-- Client Side: Not Deployed yet
+- [Client Side][clientSideURL]
 
 # API endpoints for retrieving data from 3rd party
 
@@ -85,3 +85,6 @@ Remote Working Dashboard - News Feed is a website and an accompanying API which 
   > Using any browser, Navigate to http://localhost:[insert port_number here]/
   
 [serverSideURL]: <https://mastt-news-feed-server.azurewebsites.net/>
+[clientSideURL]: <https://mastt-news-feed-web.azurewebsites.net/>
+
+
