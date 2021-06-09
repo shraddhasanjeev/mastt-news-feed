@@ -55,7 +55,7 @@ export default class News extends Component {
                     </Item.Header>
                     <Item.Description>{item.content}</Item.Description>
                     <Item.Extra>
-                      <Label>{item.country}</Label>
+                      <Label>{item.city}</Label>
                       <Button
                         floated="right"
                         onClick={this.handleClick(item._id)}

@@ -22,7 +22,7 @@ export default function Holidays() {
   }, []);
 
   return (
-    <Container style={{ marginTop: 3 }}>
+    <Container style={{ marginTop: 0 }}>
       <Card.Group itemsPerRow={4}>
         {data.map((item) => {
           return (
@@ -31,6 +31,11 @@ export default function Holidays() {
                 <Card.Description>
                   <h1>{item.title}</h1>
                 </Card.Description>
+                <Card.Header>
+                  <h4>
+                    {item.city}
+                  </h4>
+                </Card.Header>
               </Card.Content>
               <Card.Content extra>
                 <h3>

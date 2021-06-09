@@ -39,9 +39,10 @@ export default function Weather() {
                 <Card.Description>
                   <h3>{item.outlook}</h3>
                 </Card.Description>
-
               </Card.Content>
-              <Card.Content extra></Card.Content>
+              <Card.Content extra>
+                <h4>{item.alert}</h4>
+              </Card.Content>
             </Card>
           );
         })}
