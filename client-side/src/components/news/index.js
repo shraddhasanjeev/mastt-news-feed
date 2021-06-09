@@ -40,7 +40,7 @@ export default class News extends Component {
     const { news } = this.state;
     return (
       <div>
-        <Container style={{ width: 800, marginTop: 60 }}>
+        <Container style={{ width: 800, marginTop: 100 }}>
           <Item.Group>
             {news.map((item) => {
               return (

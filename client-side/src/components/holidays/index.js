@@ -28,14 +28,12 @@ export default function Holidays() {
           return (
             <Card key={item._id}>
               <Card.Content>
+                <Card.Header>
+                  <h4>{item.city}</h4>
+                </Card.Header>
                 <Card.Description>
                   <h1>{item.title}</h1>
                 </Card.Description>
-                <Card.Header>
-                  <h4>
-                    {item.city}
-                  </h4>
-                </Card.Header>
               </Card.Content>
               <Card.Content extra>
                 <h3>
